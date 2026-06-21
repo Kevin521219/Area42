@@ -2,127 +2,1332 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Area 52 Vakantiepark | Digital Experience</title>
+  <title>Area42 | Vakantiepark in de Natuur</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- AREA42 UPDATE: Lettertype gewijzigd naar Playfair Display (koppen) + Lato (body) -->
+  <!-- Menselijker, warmer dan Poppins/Open Sans — betere aansluiting bij natuur/luxe sfeer -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --brown:        #3E2723;
+      --brown-mid:    #5D4037;
+      --brown-light:  #8D6E63;
+      --taupe:        #A1887F;
+      --creme:        #F5F0E6;
+      --white:        #FFFFFF;
+      --green:        #4A6741;
+      --green-mid:    #5C7C5C;
+      --green-btn:    #4A6741;
+      --border:       #D7CCC8;
+      --muted:        #795548;
+      --shadow:       0 4px 24px rgba(62,39,35,.11);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    /* AREA42 UPDATE: Lato body — vriendelijk en goed leesbaar */
+    body{font-family:'Lato',sans-serif;background:var(--creme);color:var(--brown);line-height:1.75}
+    /* AREA42 UPDATE: Playfair Display koppen — klassiek, menselijk, warme luxe uitstraling */
+    h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;font-weight:700;color:var(--brown);line-height:1.2}
+    img{max-width:100%;display:block}
+    a{text-decoration:none}
+
+    /* ===== BUTTONS ===== */
+    .btn-dark42{display:inline-block;background:var(--brown);color:#fff!important;font-family:'Lato',sans-serif;font-weight:700;font-size:.875rem;padding:11px 26px;border-radius:6px;border:2px solid var(--brown);cursor:pointer;transition:.2s;letter-spacing:.04em}
+    .btn-dark42:hover{background:var(--brown-mid);border-color:var(--brown-mid)}
+    .btn-green42{display:inline-block;background:var(--green-btn);color:#fff!important;font-family:'Lato',sans-serif;font-weight:700;font-size:.875rem;padding:11px 26px;border-radius:6px;border:2px solid var(--green-btn);cursor:pointer;transition:.2s;letter-spacing:.04em}
+    .btn-green42:hover{background:#3a5433;border-color:#3a5433}
+    .btn-ghost42{display:inline-block;background:transparent;color:#fff!important;font-family:'Lato',sans-serif;font-weight:700;font-size:.875rem;padding:10px 24px;border-radius:6px;border:2px solid rgba(255,255,255,.7);cursor:pointer;transition:.2s}
+    .btn-ghost42:hover{background:rgba(255,255,255,.12);border-color:#fff}
+    .btn-outline42{display:inline-block;background:transparent;color:var(--brown)!important;font-family:'Lato',sans-serif;font-weight:700;font-size:.875rem;padding:10px 24px;border-radius:6px;border:2px solid var(--brown);cursor:pointer;transition:.2s}
+    .btn-outline42:hover{background:var(--brown);color:#fff!important}
+    .btn-sm42{padding:8px 18px!important;font-size:.78rem!important;border-radius:5px!important;text-transform:uppercase;letter-spacing:.07em}
+
+    /* ===== NAVBAR ===== */
+    .navbar42{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(62,39,35,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.07)}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .logo-icon{width:36px;height:36px;flex-shrink:0}
+    .logo-text{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;letter-spacing:.06em;color:#fff}
+    .logo-text span{color:var(--green-mid)}
+    .nav-links{display:flex;list-style:none;align-items:center;gap:4px}
+    .nav-links a{color:rgba(255,255,255,.82);font-family:'Lato',sans-serif;font-weight:400;font-size:.88rem;padding:7px 13px;border-radius:5px;transition:.2s}
+    .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+    .nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px}
+    .nav-hamburger span{display:block;width:22px;height:2px;background:#fff;margin:5px 0;border-radius:2px;transition:.3s}
+    .nav-mobile{display:none;background:var(--brown);border-top:1px solid rgba(255,255,255,.08)}
+    .nav-mobile.open{display:block}
+    .nav-mobile a{display:block;color:rgba(255,255,255,.85);font-family:'Lato',sans-serif;font-weight:400;font-size:.95rem;padding:13px 24px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .nav-mobile a:last-child{border:none}
+    .nav-mobile a:hover{color:#fff;background:rgba(255,255,255,.04)}
+    @media(max-width:768px){.nav-links{display:none}.nav-hamburger{display:block}}
+
+    /* ===== HERO ===== */
+    .hero{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end}
+    .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--brown)}
+    .hero-content{position:relative;z-index:2;padding:0 0 72px;width:100%}
+    /* AREA42 UPDATE: hero-eyebrow Lato */
+    .hero-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--green-mid);font-family:'Lato',sans-serif;display:block;margin-bottom:12px}
+    /* AREA42 UPDATE: hero h1 Playfair Display — geeft warmte en karakter */
+    .hero h1{font-family:'Playfair Display',serif!important;font-size:clamp(2.4rem,5.5vw,4.4rem)!important;color:#fff!important;font-weight:700!important;letter-spacing:-.01em;max-width:700px;text-shadow:0 2px 20px rgba(0,0,0,.35);line-height:1.1!important}
+    .hero-sub{color:rgba(255,255,255,.82);font-size:1rem;max-width:460px;margin-top:14px;font-family:'Lato',sans-serif;font-weight:300;line-height:1.7}
+    .hero-actions{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+    @media(max-width:576px){.hero{height:85vh}.hero-content{padding-bottom:50px}}
+
+    /* ===== AI HERO PLACEHOLDER ===== */
+    .hero-ai-bg{position:absolute;inset:0;background:
+      radial-gradient(ellipse at 70% 40%, rgba(44,74,44,.9) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 60%, rgba(62,39,23,.95) 0%, transparent 50%),
+      linear-gradient(180deg, #1a2f1a 0%, #2d1a0e 40%, #1a2a15 100%)}
+
+    /* ===== BOOKING BAR ===== */
+    .booking-wrap{margin-top:-44px;position:relative;z-index:10}
+    .booking-bar{background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(62,39,35,.16);padding:22px 26px;display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+    .bf{flex:1;min-width:130px}
+    .bf label{display:block;font-family:'Lato',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--taupe);margin-bottom:5px}
+    .bf input,.bf select{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:10px 12px;font-family:'Lato',sans-serif;font-size:.9rem;color:var(--brown);background:var(--creme);appearance:none;transition:.2s}
+    .bf input:focus,.bf select:focus{outline:none;border-color:var(--green-mid);background:#fff;box-shadow:0 0 0 3px rgba(92,124,92,.15)}
+    .bf input.err{border-color:#b71c1c;box-shadow:0 0 0 3px rgba(183,28,28,.1)}
+    .err-msg{display:none;color:#b71c1c;font-size:.72rem;margin-top:3px;font-weight:700}
+    .err-msg.show{display:block}
+    .bf-btn{flex:0;min-width:auto}
+    @media(max-width:600px){.booking-bar{flex-direction:column}.bf,.bf-btn{width:100%;min-width:100%}.bf-btn .btn-green42{width:100%;text-align:center}}
+
+    /* ===== SECTIONS ===== */
+    .sec{padding:80px 0}.sec-sm{padding:56px 0}.sec-white{background:#fff}.sec-creme{background:var(--creme)}
+    .eyebrow{display:block;font-size:.7rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--green-btn);margin-bottom:9px;font-family:'Lato',sans-serif}
+    /* AREA42 UPDATE: sec-title Playfair — geeft luxe gevoel aan sectietitels */
+    .sec-title{font-family:'Playfair Display',serif;font-weight:700;color:var(--brown);letter-spacing:-.01em;font-size:clamp(1.6rem,3vw,2.3rem)}
+    .sec-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:10px}
+    .see-all{font-family:'Lato',sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:4px;transition:.2s}
+    .see-all:hover{color:var(--brown)}
+    .see-all::after{content:'→'}
+
+    /* ===== CARDS ===== */
+    .card42{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);transition:.25s;height:100%;display:flex;flex-direction:column}
+    .card42:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(62,39,35,.16)}
+    .card-img42{width:100%;height:210px;object-fit:cover;flex-shrink:0}
+    .card-body42{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+    .card-meta42{font-size:.74rem;color:var(--taupe);margin-bottom:4px;font-family:'Lato',sans-serif}
+    .card-title42{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--brown);margin-bottom:5px}
+    .card-desc42{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:14px;flex:1;font-family:'Lato',sans-serif}
+    .card-foot42{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+    .card-price42{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--brown)}
+    .card-price42 small{font-size:.75rem;font-weight:400;color:var(--taupe);font-family:'Lato',sans-serif}
+    .card-stars42{font-size:.72rem;color:var(--taupe);margin-top:3px;font-family:'Lato',sans-serif}
+
+    /* Activiteiten kaarten */
+    .act-card{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);padding:0;text-align:center;transition:.25s;height:100%;overflow:hidden;display:flex;flex-direction:column}
+    .act-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(62,39,35,.14)}
+    /* AREA42 UPDATE: act-img vervangt emoji — echte foto's via Unsplash */
+    .act-img{width:100%;height:140px;object-fit:cover;flex-shrink:0}
+    .act-body{padding:14px 14px 16px;display:flex;flex-direction:column;flex:1}
+    .act-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;color:var(--brown);margin-bottom:4px}
+    .act-desc{font-size:.78rem;color:var(--muted);margin-bottom:8px;line-height:1.55;font-family:'Lato',sans-serif;flex:1}
+    .act-price{font-family:'Lato',sans-serif;font-size:.78rem;font-weight:700;color:var(--green-btn);margin-bottom:10px}
+
+    /* Restaurant kaarten */
+    .rest-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;height:100%;transition:.25s}
+    .rest-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(62,39,35,.14)}
+    .rest-img{width:100%;height:180px;object-fit:cover;flex-shrink:0}
+    .rest-body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column}
+    .rest-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--brown);margin-bottom:4px}
+    .rest-desc{font-size:.82rem;color:var(--muted);line-height:1.55;margin-bottom:12px;flex:1;font-family:'Lato',sans-serif}
+    .rest-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+    .rest-price{font-size:.82rem;font-weight:700;color:var(--green-btn);font-family:'Lato',sans-serif}
+
+    /* ===== STATS ===== */
+    .stats-bar{background:var(--brown);padding:48px 0}
+    .stat-item{text-align:center;padding:10px 20px}
+    .stat-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:2.2rem;color:#fff;display:block;line-height:1}
+    .stat-lbl{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:5px;display:block}
+
+    /* ===== CTA BANNER ===== */
+    .cta-sec{background:linear-gradient(135deg,var(--green) 0%,var(--green-mid) 100%);padding:76px 0;text-align:center}
+    .cta-sec h2{color:#fff!important;font-size:clamp(1.6rem,3vw,2.4rem)}
+    .cta-sec p{color:rgba(255,255,255,.82);max-width:480px;margin:12px auto 28px;font-size:.98rem}
+    .btn-cta-white{display:inline-block;background:#fff;color:var(--green)!important;font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;padding:13px 34px;border-radius:6px;transition:.2s}
+    .btn-cta-white:hover{background:var(--creme);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.14)}
+
+    /* ===== MODAL ===== */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.open{display:flex}
+    .modal-box{background:#fff;border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:modalIn .25s ease}
+    @keyframes modalIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;padding:22px 26px 16px;border-bottom:1px solid var(--border)}
+    .modal-header h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--brown)}
+    .modal-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--taupe);line-height:1;padding:2px 6px;border-radius:4px;transition:.2s}
+    .modal-close:hover{background:var(--creme);color:var(--brown)}
+    .modal-body{padding:22px 26px}
+    .modal-footer{padding:16px 26px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+    .form-row{margin-bottom:16px}
+    .form-row label{display:block;font-family:'Poppins',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe);margin-bottom:5px}
+    .form-row input,.form-row select,.form-row textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'Open Sans',sans-serif;font-size:.9rem;color:var(--brown);background:var(--creme);transition:.2s}
+    .form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--green-mid);background:#fff;box-shadow:0 0 0 3px rgba(92,124,92,.15)}
+    .form-row textarea{resize:vertical}
+    .form-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:480px){.form-2col{grid-template-columns:1fr}}
+
+    /* Summary box in modal */
+    .res-summary{background:var(--creme);border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid var(--border)}
+    .res-summary h4{font-family:'Poppins',sans-serif;font-weight:600;font-size:.9rem;color:var(--brown);margin-bottom:10px}
+    .res-row{display:flex;justify-content:space-between;font-size:.84rem;margin-bottom:5px;color:var(--muted)}
+    .res-row strong{color:var(--brown)}
+    .res-total{border-top:1px solid var(--border);margin-top:10px;padding-top:10px;font-family:'Poppins',sans-serif;font-weight:700;font-size:.95rem;display:flex;justify-content:space-between;color:var(--brown)}
+
+    /* Bevestiging stap */
+    .confirm-icon{width:64px;height:64px;background:linear-gradient(135deg,var(--green),var(--green-mid));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem}
+    .confirm-box{text-align:center;padding:10px 0}
+    .confirm-box h3{font-family:'Poppins',sans-serif;font-size:1.2rem;color:var(--brown);margin-bottom:8px}
+    .confirm-box p{font-size:.88rem;color:var(--muted);line-height:1.7}
+    .ref-badge{display:inline-block;background:var(--creme);border:1px solid var(--border);border-radius:6px;padding:6px 16px;font-family:'Courier New',monospace;font-weight:700;font-size:.9rem;color:var(--brown);margin:14px 0}
+
+    /* ===== DATABASE SECTIE — Vereenvoudigd ===== */
+    .db-sec{background:#1C1C1C;padding:70px 0}
+    .db-title{color:#fff;font-size:1.4rem;margin-bottom:4px}
+    .db-sub{color:rgba(255,255,255,.45);font-size:.85rem;margin-bottom:28px}
+    .db-card{background:#111;border:1px solid #2A2A2A;border-radius:12px;overflow:hidden}
+    .db-card-head{background:#161616;padding:12px 18px;border-bottom:1px solid #252525;display:flex;align-items:center;gap:8px}
+    .db-dot{width:11px;height:11px;border-radius:50%}
+    .db-label{font-family:'Poppins',sans-serif;font-size:.75rem;color:rgba(255,255,255,.4);margin-left:6px}
+    .db-tabs{display:flex;gap:8px;padding:16px 18px 0;flex-wrap:wrap}
+    .db-tab{background:#1A1A1A;border:1px solid #333;color:rgba(255,255,255,.55);font-family:'Poppins',sans-serif;font-size:.75rem;font-weight:600;padding:7px 14px;border-radius:6px;cursor:pointer;transition:.2s}
+    .db-tab:hover{border-color:var(--green-mid);color:rgba(255,255,255,.85)}
+    .db-tab.active{background:var(--green);border-color:var(--green);color:#fff}
+    .db-body{padding:16px 18px}
+    .db-code{background:#0D0D0D;border:1px solid #222;border-radius:8px;padding:16px;font-family:'Courier New',monospace;font-size:.8rem;color:#A5D6A7;line-height:1.75;white-space:pre-wrap;word-break:break-word}
+    .sk{color:#80CBC4;font-weight:bold}.ss{color:#CE9178}.sc{color:#608B4E}.sn{color:#B5CEA8}.st{color:#4EC9B0}.sf{color:#9CDCFE}
+    .db-params{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .db-param{flex:1;min-width:120px}
+    .db-param label{display:block;font-family:'Poppins',sans-serif;font-size:.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:4px}
+    .db-param input,.db-param select{width:100%;background:#1A1A1A;border:1px solid #333;border-radius:6px;padding:8px 11px;color:rgba(255,255,255,.85);font-family:'Courier New',monospace;font-size:.82rem}
+    .db-param input:focus,.db-param select:focus{outline:none;border-color:var(--green-mid)}
+    .db-actions{display:flex;align-items:center;gap:10px;margin-top:14px}
+    .db-run{background:var(--green);color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:.82rem;padding:9px 20px;border-radius:6px;border:none;cursor:pointer;transition:.2s}
+    .db-run:hover{background:#3a5433}
+    .db-reset{background:#1A1A1A;border:1px solid #333;color:rgba(255,255,255,.5);font-family:'Poppins',sans-serif;font-size:.75rem;padding:8px 14px;border-radius:6px;cursor:pointer;transition:.2s}
+    .db-reset:hover{border-color:var(--green-mid);color:rgba(255,255,255,.8)}
+    .db-timer{color:rgba(255,255,255,.28);font-size:.74rem;font-family:'Courier New',monospace}
+    .db-results{margin-top:14px;border:1px solid #252525;border-radius:8px;overflow:hidden;display:none}
+    .db-results table{width:100%;border-collapse:collapse;font-size:.8rem}
+    .db-results th{background:#161616;color:rgba(255,255,255,.5);font-family:'Poppins',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:9px 13px;text-align:left;border-bottom:1px solid #252525}
+    .db-results td{padding:9px 13px;color:rgba(255,255,255,.78);border-bottom:1px solid #1C1C1C;font-family:'Courier New',monospace}
+    .db-results tr:last-child td{border:none}
+    .db-results tr:hover td{background:rgba(255,255,255,.02)}
+    .db-status{font-family:'Poppins',sans-serif;font-size:.73rem;color:rgba(255,255,255,.3);margin-top:8px}
+    .db-status .ok{color:#81C784;font-weight:600}
+    .db-status .er{color:#EF9A9A;font-weight:600}
+
+    /* ===== LOGIN MODAL ===== */
+    .login-logo{text-align:center;margin-bottom:20px}
+    .login-divider{text-align:center;position:relative;margin:18px 0}
+    .login-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)}
+    .login-divider span{position:relative;background:#fff;padding:0 12px;font-size:.78rem;color:var(--taupe)}
+    .tab-btns{display:flex;background:var(--creme);border-radius:8px;padding:3px;gap:3px;margin-bottom:20px}
+    .tab-btn{flex:1;text-align:center;padding:9px;border-radius:6px;font-family:'Poppins',sans-serif;font-weight:600;font-size:.82rem;cursor:pointer;border:none;background:none;color:var(--taupe);transition:.2s}
+    .tab-btn.active{background:#fff;color:var(--brown);box-shadow:0 2px 8px rgba(62,39,35,.1)}
+    .login-tab,.register-tab{display:none}
+    .login-tab.show,.register-tab.show{display:block}
+
+    /* ===== FOOTER ===== */
+    .footer42{background:var(--brown);padding:60px 0 0}
+    .footer-brand{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.25rem;color:#fff;letter-spacing:.08em}
+    .footer-brand span{color:var(--green-mid)}
+    .footer-tag{color:rgba(255,255,255,.4);font-size:.83rem;margin-top:7px;line-height:1.6}
+    .footer-col h6{font-family:'Poppins',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green-mid);margin-bottom:14px}
+    .footer-col a{display:block;color:rgba(255,255,255,.58);font-size:.86rem;margin-bottom:8px;transition:.2s}
+    .footer-col a:hover{color:#fff;transform:translateX(3px)}
+    .footer-bottom{background:rgba(0,0,0,.22);margin-top:48px;padding:16px 0}
+    .footer-bottom p{color:rgba(255,255,255,.32);font-size:.8rem;margin:0}
+    .footer-bottom a{color:rgba(255,255,255,.32);margin-left:14px;font-size:.8rem;transition:.2s}
+    .footer-bottom a:hover{color:rgba(255,255,255,.65)}
+
+    /* ===== REVIEWS ===== */
+    .rev-card{background:var(--creme);border-radius:14px;padding:24px;border:1px solid var(--border);height:100%}
+    .rev-stars{color:#9E7D34;font-size:.88rem;margin-bottom:10px}
+    .rev-text{font-style:italic;color:var(--muted);font-size:.88rem;line-height:1.75;margin-bottom:14px}
+    .rev-author{font-family:'Poppins',sans-serif;font-weight:600;font-size:.8rem;color:var(--brown)}
+
+    /* ===== CONTACT ===== */
+    .contact-info-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px}
+    .contact-info-icon{width:40px;height:40px;background:rgba(74,103,65,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
+    .contact-info-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.84rem;color:var(--brown)}
+    .contact-info-val{font-size:.84rem;color:var(--muted)}
+
+    @media(max-width:991px){.sec{padding:58px 0}}
+    @media(max-width:576px){.sec{padding:44px 0}.stat-num{font-size:1.8rem}}
+    @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  </style>
 </head>
+<form action="https://formsubmit.co/lamar.blokld@gmail.com" method="POST">
 
-<body>
+<input type="text" name="Naam" required>
 
-<div class="offcanvas offcanvas-end extra-menu" tabindex="-1" id="extraMenu">
-  <div class="offcanvas-header">
-    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+<input type="email" name="Email" required>
+
+<button type="submit">
+TEST MAIL
+</button>
+
+</form>
+
+<!-- ===== NAVIGATIE ===== -->
+<nav class="navbar42" id="mainNav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <!-- Jouw logo (berg + huisje + boom) als inline SVG -->
+      <svg class="logo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="80" height="80" rx="14" fill="#4A6741"/>
+        <!-- Berg vorm -->
+        <path d="M40 12 L65 52 H15 Z" fill="white" opacity=".95"/>
+        <!-- Zon rechts -->
+        <circle cx="62" cy="18" r="7" fill="white" opacity=".9"/>
+        <!-- Huisje midden -->
+        <rect x="32" y="38" width="16" height="13" fill="#4A6741"/>
+        <path d="M29 39 L40 30 L51 39 Z" fill="#4A6741"/>
+        <rect x="37" y="44" width="6" height="7" fill="white" opacity=".8"/>
+        <!-- Boom links -->
+        <path d="M22 52 L26 40 L30 52 Z" fill="#4A6741"/>
+        <rect x="25" y="52" width="2" height="5" fill="#3E5E3E"/>
+        <!-- Grond -->
+        <ellipse cx="40" cy="56" rx="26" ry="5" fill="white" opacity=".6"/>
+        <!-- Pad -->
+        <path d="M38 56 Q39 60 40 65 Q41 60 42 56" stroke="white" stroke-width="2" fill="none" opacity=".7"/>
+      </svg>
+      <span class="logo-text">AREA<span>42</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#accommodaties">Accommodaties</a></li>
+      <li><a href="#activiteiten">Activiteiten</a></li>
+      <li><a href="#restaurants">Restaurants</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li style="margin-left:6px"><a href="#" onclick="openModal('loginModal');return false" class="btn-outline42" style="color:#fff!important;border-color:rgba(255,255,255,.5);padding:8px 18px;font-size:.82rem">Inloggen</a></li>
+      <li><a href="#reserveren" class="btn-green42" style="padding:9px 20px;font-size:.82rem">Reserveer nu</a></li>
+    </ul>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <div class="offcanvas-body">
-    <a href="gallery.html" class="extra-link"> Gallery</a>
-    <a href="faq.html" class="extra-link"> FAQ</a>
-    <a href="contact.html" class="extra-link">Contact</a>
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="#accommodaties">Accommodaties</a>
+    <a href="#activiteiten">Activiteiten</a>
+    <a href="#restaurants">Restaurants</a>
+    <a href="#contact">Contact</a>
+    <a href="#" onclick="openModal('loginModal');return false" style="color:var(--green-mid)!important">Inloggen</a>
+    <a href="#reserveren" style="color:var(--green-mid)!important;font-weight:700">Reserveer nu →</a>
+  </div>
+</nav>
+
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-ai-bg"></div>
+    <!-- Natuuafbeelding van Unsplash (gratis, geen copyright) -->
+    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80" 
+         alt="Bos natuur Area42"
+         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"
+         onerror="this.style.display='none'">
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(20,12,8,.78) 0%,rgba(30,20,10,.42) 55%,rgba(15,30,15,.6) 100%);z-index:1"></div>
+  </div>
+  <div class="hero-content" style="position:relative;z-index:2">
+    <div class="container">
+      <span class="hero-eyebrow">Welkom bij Area42</span>
+      <h1>Jouw avontuur<br>begint bij Area42</h1>
+      <p class="hero-sub">Ontdek unieke accommodaties, activiteiten en restaurants midden in de natuur.</p>
+      <div class="hero-actions">
+        <a href="#accommodaties" class="btn-green42" style="padding:13px 30px;font-size:.95rem">Bekijk accommodaties</a>
+        <a href="#activiteiten" class="btn-ghost42" style="padding:13px 30px;font-size:.95rem">Ontdek activiteiten</a>
+      </div>
     </div>
-    <div class="menu-mascot-container text-center mt-5">
-    <img src="bluealienmascot.png" alt="Area 52 Mascotte" class="img-fluid menu-alien">
+  </div>
+</section>
+
+
+<!-- ===== BOOKING BAR ===== -->
+<section id="reserveren">
+  <div class="container">
+    <div class="booking-wrap">
+      <div class="booking-bar">
+        <div class="bf">
+          <label for="aankomst">Aankomst</label>
+          <input type="date" id="aankomst">
+          <span class="err-msg" id="errAankomst">Kies een datum vanaf vandaag.</span>
+        </div>
+        <div class="bf">
+          <label for="vertrek">Vertrek</label>
+          <input type="date" id="vertrek">
+          <span class="err-msg" id="errVertrek">Vertrek moet na aankomst liggen.</span>
+        </div>
+        <div class="bf">
+          <label for="gasten">Gasten</label>
+          <select id="gasten">
+            <option>1 persoon</option>
+            <option selected>2 personen</option>
+            <option>3 personen</option>
+            <option>4 personen</option>
+            <option>5+ personen</option>
+          </select>
+        </div>
+        <div class="bf">
+          <label for="typeAcco">Type verblijf</label>
+          <select id="typeAcco">
+            <option value="">Alle types</option>
+            <option>Forest Lodge</option>
+            <option>Wellness Suite</option>
+            <option>Family Cabin</option>
+            <option>Villa Panorama</option>
+          </select>
+        </div>
+        <div class="bf bf-btn">
+          <button class="btn-green42" id="searchBtn" style="width:100%;padding:11px 22px">Zoeken</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== ACCOMMODATIES ===== -->
+<section class="sec sec-white" id="accommodaties">
+  <div class="container">
+    <div class="sec-row">
+      <div>
+        <span class="eyebrow">Waar wil jij slapen?</span>
+        <h2 class="sec-title">Unieke Accommodaties</h2>
+      </div>
+      <a href="#" class="see-all">Bekijk alle accommodaties</a>
+    </div>
+    <div class="row g-4">
+
+      <!-- Kaart 1 — Forest Lodge -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card42">
+          <img class="card-img42"
+               src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=600&q=75"
+               alt="Forest Lodge"
+               onerror="this.style.cssText='height:210px;background:linear-gradient(135deg,#5C7C5C,#3E5E3E);display:block'">
+          <div class="card-body42">
+            <span class="card-meta42">4 personen · Forest Lodge</span>
+            <div class="card-title42">Forest Lodge</div>
+            <p class="card-desc42">Weggedoken tussen eeuwenoude eiken. Privédek met uitzicht op het bos.</p>
+            <div class="card-foot42">
+              <div>
+                <div class="card-price42">€110 <small>/ nacht</small></div>
+                <div class="card-stars42">★ 4.9 (124 reviews)</div>
+              </div>
+              <button class="btn-dark42 btn-sm42" onclick="openReservering('Forest Lodge','€110')">Bekijk</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kaart 2 — Family Cabin -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card42">
+          <img class="card-img42"
+               src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=600&q=75"
+               alt="Family Cabin"
+               onerror="this.style.cssText='height:210px;background:linear-gradient(135deg,#A1887F,#6D4C41);display:block'">
+          <div class="card-body42">
+            <span class="card-meta42">6 personen · Family Cabin</span>
+            <div class="card-title42">Family Cabin</div>
+            <p class="card-desc42">Ruime blokhut met open haard en eigen buitenkeuken voor grote gezinnen.</p>
+            <div class="card-foot42">
+              <div>
+                <div class="card-price42">€175 <small>/ nacht</small></div>
+                <div class="card-stars42">★ 4.8 (89 reviews)</div>
+              </div>
+              <button class="btn-dark42 btn-sm42" onclick="openReservering('Family Cabin','€175')">Bekijk</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kaart 3 — Wellness Suite -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card42">
+          <img class="card-img42"
+               src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=75"
+               alt="Wellness Suite"
+               onerror="this.style.cssText='height:210px;background:linear-gradient(135deg,#78909C,#455A64);display:block'">
+          <div class="card-body42">
+            <span class="card-meta42">2 personen · Wellness Suite</span>
+            <div class="card-title42">Wellness Suite</div>
+            <p class="card-desc42">Privéjacuzzi, sauna en directe toegang tot het wellnesscentrum.</p>
+            <div class="card-foot42">
+              <div>
+                <div class="card-price42">€195 <small>/ nacht</small></div>
+                <div class="card-stars42">★ 4.9 (67 reviews)</div>
+              </div>
+              <button class="btn-dark42 btn-sm42" onclick="openReservering('Wellness Suite','€195')">Bekijk</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kaart 4 — Villa Panorama -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card42">
+          <img class="card-img42"
+               src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=75"
+               alt="Villa Panorama"
+               onerror="this.style.cssText='height:210px;background:linear-gradient(135deg,#8D6E63,#4E342E);display:block'">
+          <div class="card-body42">
+            <span class="card-meta42">8 personen · Villa</span>
+            <div class="card-title42">Villa Panorama</div>
+            <p class="card-desc42">Volledig uitgeruste villa met panoramaterras en privézwembad.</p>
+            <div class="card-foot42">
+              <div>
+                <div class="card-price42">€320 <small>/ nacht</small></div>
+                <div class="card-stars42">★ 5.0 (42 reviews)</div>
+              </div>
+              <button class="btn-dark42 btn-sm42" onclick="openReservering('Villa Panorama','€320')">Bekijk</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== STATS ===== -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-6 col-md-3"><div class="stat-item"><span class="stat-num">1.200+</span><span class="stat-lbl">Families per jaar</span></div></div>
+      <div class="col-6 col-md-3"><div class="stat-item"><span class="stat-num">42 ha</span><span class="stat-lbl">Natuur & bos</span></div></div>
+      <div class="col-6 col-md-3"><div class="stat-item"><span class="stat-num">4.8 ★</span><span class="stat-lbl">Gemiddeld cijfer</span></div></div>
+      <div class="col-6 col-md-3"><div class="stat-item"><span class="stat-num">30 jr</span><span class="stat-lbl">Vakantie-ervaring</span></div></div>
+    </div>
   </div>
 </div>
 
 
-<header class="site-header">
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-      <a class="navbar-brand brand-logo logo-test" href="index.html">
-        <span class="logo-main">AREA 52</span>
-        <span class="logo-sub">Vakantiepark</span>
-      </a>
-
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navContent">
-        <ul class="navbar-nav mx-auto text-center">
-          <li class="nav-item"><a class="nav-link pill-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link pill-link" href="accommodatie.html">Accomodatie</a></li>
-          <li class="nav-item"><a class="nav-link pill-link" href="horeca.html">Horeca</a></li>
-          <li class="nav-item"><a class="nav-link pill-link" href="activiteiten.html">Activiteiten</a></li>
-        </ul>
-
-        <button class="btn-cta-pill" data-bs-toggle="offcanvas" data-bs-target="#extraMenu">
-          Menu ☰
-        </button>
+<!-- ===== ACTIVITEITEN ===== -->
+<section class="sec sec-creme" id="activiteiten">
+  <div class="container">
+    <div class="sec-row">
+      <div>
+        <span class="eyebrow">Iets voor iedereen</span>
+        <h2 class="sec-title">Ontdek Nieuwe Activiteiten</h2>
       </div>
+      <a href="#" class="see-all">Bekijk alle activiteiten</a>
     </div>
-  </nav>
-</header>
-
-<section class="hero-video-container">
-  <video autoplay muted loop playsinline class="hero-video">
-    <source src="\area52_promo.mp4" type="video/mp4">
-  </video>
-  <div class="video-overlay"></div>
-  <div class="hero-content-overlay text-center">
-    <div class="container">
-      <h1 class="display-3 fw-black text-green mb-2">ONTDEK HET BUITENAARDS AVONTUUR</h1>
-      <div class="hero-mascot-wrap mt-4">
-    
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="act-card">
+          <img src="images/Boogschieten.png"
+     class="activity-img"
+     alt="Boogschieten">
+          <div class="act-name">Boogschieten</div>
+          <p class="act-desc">Leer de basis of ga voor het goud.</p>
+          <div class="act-price">Vanaf €8 p.p.</div>
+          <button class="btn-dark42 btn-sm42 d-block w-100 mt-3" onclick="openActiviteit('Boogschieten','€8 p.p.')">Boek</button>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="act-card">
+         <img src="images/fietsen.png"
+     class="activity-img"
+     alt="Fietsen">
+          <div class="act-name">Fietsen</div>
+          <p class="act-desc">Verken 42 km aan bosroutes.</p>
+          <div class="act-price">Vanaf €6 p.p.</div>
+          <button class="btn-dark42 btn-sm42 d-block w-100 mt-3" onclick="openActiviteit('Fietsen','€6 p.p.')">Boek</button>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="act-card">
+          <img src="images/Klimtuin.png"
+     class="activity-img"
+     alt="Klimtuin">
+          <div class="act-name">Klimtuin</div>
+          <p class="act-desc">Boomtoppen verkennen voor alle leeftijden.</p>
+          <div class="act-price">Vanaf €10 p.p.</div>
+          <button class="btn-dark42 btn-sm42 d-block w-100 mt-3" onclick="openActiviteit('Klimtuin','€10 p.p.')">Boek</button>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="act-card">
+         <img src="images/Wellness.png"
+     class="activity-img"
+     alt="Welness">
+          <div class="act-name">Wellness</div>
+          <p class="act-desc">Sauna, bad en massages.</p>
+          <div class="act-price">Vanaf €22 p.p.</div>
+          <button class="btn-dark42 btn-sm42 d-block w-100 mt-3" onclick="openActiviteit('Wellness','€22 p.p.')">Boek</button>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="act-card">
+          <img src="images/Yoga.png"
+     class="activity-img"
+     alt="Yoga">
+          <div class="act-name">Yoga</div>
+          <p class="act-desc">Ochtend- en avondsessies in het bos.</p>
+          <div class="act-price">Vanaf €12 p.p.</div>
+          <button class="btn-dark42 btn-sm42 d-block w-100 mt-3" onclick="openActiviteit('Yoga','€12 p.p.')">Boek</button>
+        </div>
+      </div>
+      
+        </div>
       </div>
     </div>
   </div>
-
-
 </section>
 
-<main>
-  
-</main>
+
+<!-- ===== RESTAURANTS ===== -->
+<section class="sec sec-white" id="restaurants">
+  <div class="container">
+    <div class="sec-row">
+      <div>
+        <span class="eyebrow">Van ontbijt tot diner</span>
+        <h2 class="sec-title">Geniet van Lokale Smaken</h2>
+      </div>
+      <a href="#" class="see-all">Bekijk alle restaurants</a>
+    </div>
+    <div class="row g-4">
+
+      <!-- Restaurant 1 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="rest-card">
+          <img class="rest-img"
+               src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=75"
+               alt="De Boscantine"
+               onerror="this.style.cssText='height:180px;background:linear-gradient(135deg,#5C7C5C,#3E5E3E);display:block'">
+          <div class="rest-body">
+            <div class="rest-name">De Boscantine</div>
+            <p class="rest-desc">Seizoensgebonden menu met producten van lokale boerderijen. Ontbijt & diner.</p>
+            <div class="rest-foot">
+              <span class="rest-price">Vanaf €18,–</span>
+              <button class="btn-dark42 btn-sm42" onclick="openRestaurant('De Boscantine')">Reserveer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurant 2 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="rest-card">
+          <img class="rest-img"
+               src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=75"
+               alt="Vuurkuil BBQ"
+               onerror="this.style.cssText='height:180px;background:linear-gradient(135deg,#A1887F,#6D4C41);display:block'">
+          <div class="rest-body">
+            <div class="rest-name">Vuurkuil BBQ</div>
+            <p class="rest-desc">Grill je eigen maaltijd boven open vuur. Elke avond van 17:00–22:00.</p>
+            <div class="rest-foot">
+              <span class="rest-price">Vanaf €24,–</span>
+              <button class="btn-dark42 btn-sm42" onclick="openRestaurant('Vuurkuil BBQ')">Reserveer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurant 3 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="rest-card">
+          <img class="rest-img"
+               src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=75"
+               alt="Koffiehuis 42"
+               onerror="this.style.cssText='height:180px;background:linear-gradient(135deg,#78909C,#455A64);display:block'">
+          <div class="rest-body">
+            <div class="rest-name">Koffiehuis 42</div>
+            <p class="rest-desc">Koffie, verse taarten en lichte lunches. Het gezellige hart van het park.</p>
+            <div class="rest-foot">
+              <span class="rest-price">Vanaf €5,–</span>
+              <button class="btn-dark42 btn-sm42" onclick="openRestaurant('Koffiehuis 42')">Reserveer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurant 4 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="rest-card">
+          <img class="rest-img"
+               src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?w=600&q=75"
+               alt="Wijnbar Eik"
+               onerror="this.style.cssText='height:180px;background:linear-gradient(135deg,#8D6E63,#5D4037);display:block'">
+          <div class="rest-body">
+            <div class="rest-name">Wijnbar Eik</div>
+            <p class="rest-desc">Culinaire borrelplanken en Europese wijnen. Reservering aanbevolen.</p>
+            <div class="rest-foot">
+              <span class="rest-price">Vanaf €12,–</span>
+              <button class="btn-dark42 btn-sm42" onclick="openRestaurant('Wijnbar Eik')">Reserveer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
-<footer class="area-footer">
-  <div class="footer-top">
-    <div class="container">
-        <div class="col-md-4">
-      </div>
-    </div>
-  </div>
 
-  <div class="footer-bottom">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-6 col-md-3">
-          <h5>Boeken</h5>
-          <ul class="list-unstyled">
-            <li><a href="#">Extra’s</a></li>
-            <li><a href="#">Voorwaarden</a></li>
-          </ul>
+
+<!-- ===== REVIEWS ===== -->
+<section class="sec sec-creme">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="eyebrow">Wat gasten zeggen</span>
+      <h2 class="sec-title">4.8 van de 5 sterren</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"We kwamen uitgeput aan en vertrokken herboren. De rust, de natuur, het eten — alles was perfect."</p>
+          <span class="rev-author">Lisanne & Tom · Utrecht</span>
         </div>
-        <div class="col-6 col-md-3">
-          <h5>Service</h5>
-          <ul class="list-unstyled">
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-          </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"Onze kinderen wilden niet meer naar huis. De activiteiten zijn gevarieerd en het personeel fantastisch."</p>
+          <span class="rev-author">Familie De Vries · Amsterdam</span>
         </div>
-        <div class="col-6 col-md-3">
-          <h5>Area 52</h5>
-          <ul class="list-unstyled">
-            <li><a href="#">Over ons</a></li>
-            <li><a href="#">Vacatures</a></li>
-          </ul>
-        </div>
-        <div class="col-6 col-md-3">
-          <h5>Betalen</h5>
-          <p class="small fw-bold">iDEAL • VISA • MASTERCARD</p>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"De Wellness Suite was een openbaring. Al ons tweede bezoek en zeker niet het laatste."</p>
+          <span class="rev-author">Marco · Eindhoven</span>
         </div>
       </div>
     </div>
   </div>
+</section>
 
+
+<!-- ===== CTA ===== -->
+<section class="cta-sec">
+  <div class="container">
+    <span class="eyebrow" style="color:rgba(255,255,255,.65)">Klaar voor een pauze?</span>
+    <h2>Jouw verblijf begint hier</h2>
+    <p>Beschikbaarheid wisselt snel. Reserveer vandaag en verzeker je plek in de natuur.</p>
+    <a href="#reserveren" class="btn-cta-white">Controleer beschikbaarheid</a>
+  </div>
+</section>
+
+
+<!-- ===== DATABASE — Vereenvoudigd voor medewerkers ===== -->
+<section class="db-sec" id="database">
+  <div class="container">
+    <h2 class="db-title">Reserveringsbeheer</h2>
+    <p class="db-sub">Zoek, voeg in of controleer gegevens direct via de database.</p>
+
+    <div class="db-card">
+      <div class="db-card-head">
+        <div class="db-dot" style="background:#FF5F57"></div>
+        <div class="db-dot" style="background:#FFBD2E"></div>
+        <div class="db-dot" style="background:#28C840"></div>
+        <span class="db-label">area42_db · MySQL</span>
+      </div>
+
+      <div class="db-tabs">
+        <button class="db-tab active" data-q="beschikbaar">Beschikbaarheid</button>
+        <button class="db-tab" data-q="reservering">Nieuwe reservering</button>
+        <button class="db-tab" data-q="gasten">Gasten opzoeken</button>
+        <button class="db-tab" data-q="bezetting">Bezettingsgraad</button>
+      </div>
+
+      <div class="db-body">
+        <div class="db-code" id="dbSql"></div>
+        <div class="db-params" id="dbParams"></div>
+        <div class="db-actions">
+          <button class="db-run" id="dbRun">▶ Uitvoeren</button>
+          <button class="db-reset" id="dbReset">Reset</button>
+          <span class="db-timer" id="dbTimer"></span>
+        </div>
+        <div class="db-results" id="dbResults"></div>
+        <div class="db-status" id="dbStatus"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== CONTACT ===== -->
+<section class="sec sec-white" id="contact">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-12 col-lg-5">
+        <span class="eyebrow">Hulp nodig?</span>
+        <h2 class="sec-title mb-3">Neem contact op</h2>
+        <p style="color:var(--muted);margin-bottom:26px">Onze medewerkers helpen je graag bij reserveringen, arrangementen of vragen over het park.</p>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📍</div>
+          <div>
+            <div class="contact-info-label">Adres</div>
+            <div class="contact-info-val">Bosweg 42, 7312 AB Apeldoorn</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📞</div>
+          <div>
+            <div class="contact-info-label">Telefoon</div>
+            <div class="contact-info-val">+31 (0)55 123 45 67</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">✉️</div>
+          <div>
+            <div class="contact-info-label">E-mail</div>
+            <div class="contact-info-val">info@area42.nl</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-7">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:34px;box-shadow:var(--shadow)">
+          <h3 style="font-size:1.05rem;margin-bottom:22px">Stuur een bericht</h3>
+          <div class="form-2col">
+            <div class="form-row">
+              <label>Naam</label>
+              <input type="text" placeholder="Jouw naam">
+            </div>
+            <div class="form-row">
+              <label>E-mail</label>
+              <input type="email" placeholder="naam@voorbeeld.nl">
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Bericht</label>
+            <textarea rows="4" placeholder="Stel hier je vraag..."></textarea>
+          </div>
+          <button class="btn-green42" style="width:100%;padding:13px;font-size:.9rem">Verzenden</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer42">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-12 col-md-4">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
+            <rect width="80" height="80" rx="14" fill="#4A6741"/>
+            <path d="M40 12 L65 52 H15 Z" fill="white" opacity=".95"/>
+            <circle cx="62" cy="18" r="7" fill="white" opacity=".9"/>
+            <rect x="32" y="38" width="16" height="13" fill="#4A6741"/>
+            <path d="M29 39 L40 30 L51 39 Z" fill="#4A6741"/>
+            <rect x="37" y="44" width="6" height="7" fill="white" opacity=".8"/>
+            <path d="M22 52 L26 40 L30 52 Z" fill="#4A6741"/>
+            <rect x="25" y="52" width="2" height="5" fill="#3E5E3E"/>
+            <ellipse cx="40" cy="56" rx="26" ry="5" fill="white" opacity=".6"/>
+            <path d="M38 56 Q39 60 40 65 Q41 60 42 56" stroke="white" stroke-width="2" fill="none" opacity=".7"/>
+          </svg>
+          <span class="footer-brand">AREA<span>42</span></span>
+        </div>
+        <p class="footer-tag">Vakantiepark · Veluwe, Nederland<br>Verborgen in de natuur, dichtbij het leven.</p>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Verblijf</h6>
+        <a href="#accommodaties">Accommodaties</a>
+        <a href="#reserveren">Reserveren</a>
+        <a href="#">Arrangementen</a>
+        <a href="#">Voorwaarden</a>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Beleven</h6>
+        <a href="#activiteiten">Activiteiten</a>
+        <a href="#restaurants">Restaurants</a>
+        <a href="#">Wellness</a>
+        <a href="#">Evenementen</a>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Service</h6>
+        <a href="#contact">Contact</a>
+        <a href="#">FAQ</a>
+        <a href="#">Over ons</a>
+        <a href="#">Vacatures</a>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Betalen</h6>
+        <a href="#">iDEAL</a>
+        <a href="#">Visa</a>
+        <a href="#">Mastercard</a>
+        <a href="#">PayPal</a>
+      </div>
+    </div>
+  </div>
   <div class="footer-bottom">
-    <div class="container">
-      © 2026 Area 52 Vakantiepark
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <p>© 2026 Area 42 Vakantiepark B.V.</p>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+        <a href="#">Sitemap</a>
+      </div>
     </div>
   </div>
 </footer>
 
+
+<!-- ================================================================
+     MODALS
+     ================================================================ -->
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-header">
+      <h3>Mijn Area42</h3>
+      <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tab-btns">
+        <button class="tab-btn active" onclick="switchTab('login')">Inloggen</button>
+        <button class="tab-btn" onclick="switchTab('register')">Registreren</button>
+      </div>
+
+      <!-- Login -->
+      <div class="login-tab show" id="loginTab">
+        <div class="form-row">
+          <label>E-mailadres</label>
+          <input type="email" placeholder="naam@voorbeeld.nl" id="loginEmail">
+        </div>
+        <div class="form-row">
+          <label>Wachtwoord</label>
+          <input type="password" placeholder="••••••••" id="loginPass">
+        </div>
+        <div style="text-align:right;margin-top:-8px;margin-bottom:16px">
+          <a href="#" style="font-size:.78rem;color:var(--muted)">Wachtwoord vergeten?</a>
+        </div>
+        <button class="btn-green42" style="width:100%;padding:13px" onclick="doLogin()">Inloggen</button>
+      </div>
+
+      <!-- Register -->
+      <div class="register-tab" id="registerTab">
+        <div class="form-2col">
+          <div class="form-row"><label>Voornaam</label><input type="text" placeholder="Anna"></div>
+          <div class="form-row"><label>Achternaam</label><input type="text" placeholder="de Vries"></div>
+        </div>
+        <div class="form-row"><label>E-mailadres</label><input type="email" placeholder="anna@voorbeeld.nl"></div>
+        <div class="form-row"><label>Wachtwoord</label><input type="password" placeholder="Min. 8 tekens"></div>
+        <button class="btn-green42" style="width:100%;padding:13px;margin-top:4px" onclick="doRegister()">Account aanmaken</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- RESERVERING MODAL (Accommodatie) -->
+<div class="modal-overlay" id="resModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="resModalTitle">Reservering</h3>
+      <button class="modal-close" onclick="closeModal('resModal')">✕</button>
+    </div>
+    <div class="modal-body" id="resModalBody">
+      <!-- Stap 1: Formulier -->
+      <div id="resStep1">
+        <div class="res-summary" id="resSummary">
+          <h4>Overzicht</h4>
+          <div class="res-row"><span>Accommodatie</span><strong id="resName">—</strong></div>
+          <div class="res-row"><span>Aankomst</span><strong id="resAankomst">—</strong></div>
+          <div class="res-row"><span>Vertrek</span><strong id="resVertrek">—</strong></div>
+          <div class="res-row"><span>Nachten</span><strong id="resNachten">—</strong></div>
+          <div class="res-row"><span>Gasten</span><strong id="resGasten">—</strong></div>
+          <div class="res-total"><span>Totaal</span><span id="resTotaal">—</span></div>
+        </div>
+        <div class="form-2col">
+          <div class="form-row"><label>Voornaam</label><input type="text" id="rf-voor" placeholder="Anna"></div>
+          <div class="form-row"><label>Achternaam</label><input type="text" id="rf-achter" placeholder="de Vries"></div>
+        </div>
+        <div class="form-row"><label>E-mailadres</label><input type="email" id="rf-email" placeholder="anna@voorbeeld.nl"></div>
+        <div class="form-row"><label>Telefoonnummer</label><input type="tel" id="rf-tel" placeholder="+31 6 12345678"></div>
+        <div class="form-row">
+          <label>Speciale wensen (optioneel)</label>
+          <textarea id="rf-wensen" rows="2" placeholder="Bijv. allergieen, kinderstoel, begane grond..."></textarea>
+        </div>
+      </div>
+      <!-- Stap 2: Bevestiging -->
+      <div id="resStep2" style="display:none">
+        <div class="confirm-box">
+          <div class="confirm-icon">✓</div>
+          <h3>Reservering bevestigd!</h3>
+          <p>Je ontvangt een bevestiging op je e-mailadres.<br>Bewaar je referentienummer:</p>
+          <div class="ref-badge" id="refNummer">—</div>
+          <p style="margin-top:10px">We kijken ernaar uit je te verwelkomen bij Area42.</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" id="resFooter">
+      <button class="btn-outline42" onclick="closeModal('resModal')">Annuleren</button>
+      <button class="btn-green42" id="resConfirmBtn" onclick="bevestigReservering()">Bevestig reservering</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ACTIVITEIT MODAL -->
+<div class="modal-overlay" id="actModal">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-header">
+      <h3 id="actModalTitle">Activiteit boeken</h3>
+      <button class="modal-close" onclick="closeModal('actModal')">✕</button>
+    </div>
+    <div class="modal-body" id="actModalBody">
+      <div id="actStep1">
+        <div class="res-summary">
+          <h4 id="actNaam">—</h4>
+          <div class="res-row"><span>Prijs</span><strong id="actPrijs">—</strong></div>
+        </div>
+        <div class="form-row"><label>Datum</label><input type="date" id="af-datum"></div>
+        <div class="form-row">
+          <label>Aantal personen</label>
+          <select id="af-pers">
+            <option>1 persoon</option>
+            <option selected>2 personen</option>
+            <option>3 personen</option>
+            <option>4 personen</option>
+            <option>5+ personen</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Naam</label><input type="text" id="af-naam" placeholder="Jouw naam"></div>
+        <div class="form-row"><label>E-mail</label><input type="email" id="af-email" placeholder="naam@voorbeeld.nl"></div>
+      </div>
+      <div id="actStep2" style="display:none">
+        <div class="confirm-box">
+          <div class="confirm-icon">✓</div>
+          <h3>Activiteit geboekt!</h3>
+          <p>Bevestiging ontvang je per e-mail.<br>Referentienummer:</p>
+          <div class="ref-badge" id="actRef">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" id="actFooter">
+      <button class="btn-outline42" onclick="closeModal('actModal')">Annuleren</button>
+      <button class="btn-green42" onclick="bevestigActiviteit()">Activiteit boeken</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- RESTAURANT MODAL -->
+<div class="modal-overlay" id="restModal">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-header">
+      <h3 id="restModalTitle">Tafel reserveren</h3>
+      <button class="modal-close" onclick="closeModal('restModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="restStep1">
+        <div class="res-summary">
+          <h4 id="restNaam">—</h4>
+        </div>
+        <div class="form-2col">
+          <div class="form-row"><label>Datum</label><input type="date" id="rf2-datum"></div>
+          <div class="form-row">
+            <label>Tijdstip</label>
+            <select id="rf2-tijd">
+              <option>12:00</option><option>12:30</option><option>13:00</option>
+              <option>18:00</option><option>18:30</option><option selected>19:00</option>
+              <option>19:30</option><option>20:00</option><option>20:30</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Aantal personen</label>
+          <select id="rf2-pers">
+            <option>1 persoon</option><option selected>2 personen</option>
+            <option>3 personen</option><option>4 personen</option>
+            <option>5 personen</option><option>6+ personen</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Naam</label><input type="text" id="rf2-naam" placeholder="Naam voor de tafel"></div>
+        <div class="form-row"><label>E-mail</label><input type="email" id="rf2-email" placeholder="naam@voorbeeld.nl"></div>
+      </div>
+      <div id="restStep2" style="display:none">
+        <div class="confirm-box">
+          <div class="confirm-icon">✓</div>
+          <h3>Tafel gereserveerd!</h3>
+          <p>Bevestiging ontvang je per e-mail.<br>Referentienummer:</p>
+          <div class="ref-badge" id="restRef">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" id="restFooter">
+      <button class="btn-outline42" onclick="closeModal('restModal')">Annuleren</button>
+      <button class="btn-green42" onclick="bevestigRestaurant()">Tafel reserveren</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ===== UTILS ===== */
+function today(){ const d=new Date();d.setHours(0,0,0,0);return d.toISOString().split('T')[0]; }
+function tomorrow(from){const d=from?new Date(from):new Date();d.setDate(d.getDate()+1);return d.toISOString().split('T')[0];}
+function fmtDate(s){if(!s)return '—';const d=new Date(s);return d.toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});}
+function diffDays(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
+function genRef(){return 'A42-'+Math.floor(10000+Math.random()*90000);}
+
+/* ===== HAMBURGER ===== */
+document.getElementById('hamburger').addEventListener('click',()=>{
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+document.getElementById('mobileMenu').querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open'));
+});
+
+/* ===== SMOOTH SCROLL ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();const top=t.getBoundingClientRect().top+window.scrollY-68;window.scrollTo({top,behavior:'smooth'});}
+  });
+});
+
+/* ===== DATUMVALIDATIE ===== */
+const inA=document.getElementById('aankomst'),inV=document.getElementById('vertrek');
+const eA=document.getElementById('errAankomst'),eV=document.getElementById('errVertrek');
+(function(){
+  const td=today(),tm=tomorrow();
+  inA.min=td; inA.value=tm;
+  inV.min=tomorrow(tm); inV.value=tomorrow(tm);
+})();
+inA.addEventListener('change',()=>{
+  const v=inA.value,td=today();
+  if(v<td){inA.classList.add('err');eA.classList.add('show');inA.value=td;return;}
+  inA.classList.remove('err');eA.classList.remove('show');
+  const nm=tomorrow(v);
+  inV.min=nm;
+  if(inV.value<=v){inV.value=nm;}
+});
+inV.addEventListener('change',()=>{
+  if(inV.value<=inA.value){inV.classList.add('err');eV.classList.add('show');inV.value=tomorrow(inA.value);return;}
+  inV.classList.remove('err');eV.classList.remove('show');
+});
+document.getElementById('searchBtn').addEventListener('click',()=>{
+  const td=today();let ok=true;
+  if(!inA.value||inA.value<td){inA.classList.add('err');eA.classList.add('show');ok=false;}
+  if(!inV.value||inV.value<=inA.value){inV.classList.add('err');eV.classList.add('show');ok=false;}
+  if(ok){document.getElementById('accommodaties').scrollIntoView({behavior:'smooth',block:'start'});}
+});
+
+/* ===== MODALS ===== */
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+  // Reset stap 2 als aanwezig
+  const s2=document.getElementById(id.replace('Modal','')+'Step2')||document.getElementById('resStep2')||document.getElementById('actStep2')||document.getElementById('restStep2');
+}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) closeModal(m.id); });
+});
+
+/* ===== LOGIN TABS ===== */
+function switchTab(t){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(t==='login'?0:1)));
+  document.getElementById('loginTab').classList.toggle('show',t==='login');
+  document.getElementById('registerTab').classList.toggle('show',t==='register');
+}
+function doLogin(){
+  const e=document.getElementById('loginEmail').value;
+  const p=document.getElementById('loginPass').value;
+  if(!e||!p){alert('Vul je e-mail en wachtwoord in.');return;}
+  closeModal('loginModal');
+  alert('Welkom terug, '+e.split('@')[0]+'!');
+}
+function doRegister(){
+  closeModal('loginModal');
+  alert('Account aangemaakt! Controleer je e-mail voor activatie.');
+}
+
+/* ===== RESERVERING MODAL ===== */
+let currentAcco='',currentPrijs=0;
+function openReservering(naam,prijs){
+  currentAcco=naam;
+  currentPrijs=parseInt(prijs.replace(/[^0-9]/g,''));
+  // Stap 1 tonen, stap 2 verbergen
+  document.getElementById('resStep1').style.display='block';
+  document.getElementById('resStep2').style.display='none';
+  document.getElementById('resFooter').style.display='flex';
+  document.getElementById('resModalTitle').textContent='Reserveer '+naam;
+  document.getElementById('resName').textContent=naam;
+  // Vul datums van booking bar
+  const a=inA.value,v=inV.value;
+  document.getElementById('resAankomst').textContent=fmtDate(a);
+  document.getElementById('resVertrek').textContent=fmtDate(v);
+  const n=a&&v?diffDays(a,v):1;
+  document.getElementById('resNachten').textContent=n+' nacht'+(n>1?'en':'');
+  document.getElementById('resGasten').textContent=document.getElementById('gasten').value;
+  document.getElementById('resTotaal').textContent='€'+(currentPrijs*n)+',-';
+  openModal('resModal');
+}
+function bevestigReservering(){
+  const v=document.getElementById('rf-voor').value;
+  const e=document.getElementById('rf-email').value;
+  if(!v||!e){alert('Vul je naam en e-mailadres in.');return;}
+  const ref=genRef();
+  document.getElementById('refNummer').textContent=ref;
+  document.getElementById('resStep1').style.display='none';
+  document.getElementById('resStep2').style.display='block';
+  document.getElementById('resFooter').style.display='none';
+}
+
+/* ===== ACTIVITEIT MODAL ===== */
+function openActiviteit(naam,prijs){
+  document.getElementById('actStep1').style.display='block';
+  document.getElementById('actStep2').style.display='none';
+  document.getElementById('actFooter').style.display='flex';
+  document.getElementById('actModalTitle').textContent=naam+' boeken';
+  document.getElementById('actNaam').textContent=naam;
+  document.getElementById('actPrijs').textContent=prijs;
+  // Datum min = vandaag
+  const fd=document.getElementById('af-datum');
+  fd.min=today();fd.value=tomorrow();
+  openModal('actModal');
+}
+function bevestigActiviteit(){
+  const n=document.getElementById('af-naam').value;
+  const e=document.getElementById('af-email').value;
+  if(!n||!e){alert('Vul je naam en e-mailadres in.');return;}
+  const ref=genRef();
+  document.getElementById('actRef').textContent=ref;
+  document.getElementById('actStep1').style.display='none';
+  document.getElementById('actStep2').style.display='block';
+  document.getElementById('actFooter').style.display='none';
+}
+
+/* ===== RESTAURANT MODAL ===== */
+function openRestaurant(naam){
+  document.getElementById('restStep1').style.display='block';
+  document.getElementById('restStep2').style.display='none';
+  document.getElementById('restFooter').style.display='flex';
+  document.getElementById('restModalTitle').textContent='Tafel bij '+naam;
+  document.getElementById('restNaam').textContent=naam;
+  const fd=document.getElementById('rf2-datum');
+  fd.min=today();fd.value=tomorrow();
+  openModal('restModal');
+}
+function bevestigRestaurant(){
+  const n=document.getElementById('rf2-naam').value;
+  const e=document.getElementById('rf2-email').value;
+  if(!n||!e){alert('Vul je naam en e-mailadres in.');return;}
+  const ref=genRef();
+  document.getElementById('restRef').textContent=ref;
+  document.getElementById('restStep1').style.display='none';
+  document.getElementById('restStep2').style.display='block';
+  document.getElementById('restFooter').style.display='none';
+}
+
+/* ===== DATABASE QUERIES ===== */
+const queries={
+  beschikbaar:{
+    sql:`<span class="sk">SELECT</span> a.<span class="sf">naam</span>, a.<span class="sf">type</span>, a.<span class="sf">max_personen</span>, a.<span class="sf">prijs_per_nacht</span>
+<span class="sk">FROM</span> <span class="st">accommodaties</span> a
+<span class="sk">WHERE</span> a.<span class="sf">id</span> <span class="sk">NOT IN</span> (
+  <span class="sk">SELECT</span> r.<span class="sf">accommodatie_id</span>
+  <span class="sk">FROM</span> <span class="st">reserveringen</span> r
+  <span class="sk">WHERE</span> r.<span class="sf">aankomst</span> &lt; <span class="ss">:vertrek</span>
+    <span class="sk">AND</span> r.<span class="sf">vertrek</span> &gt; <span class="ss">:aankomst</span>
+    <span class="sk">AND</span> r.<span class="sf">status</span> != <span class="ss">'geannuleerd'</span>
+)
+<span class="sk">AND</span> a.<span class="sf">max_personen</span> &gt;= <span class="sn">:gasten</span>
+<span class="sk">ORDER BY</span> a.<span class="sf">prijs_per_nacht</span> <span class="sk">ASC</span>;`,
+    params:[{n:'aankomst',l:'Aankomst',t:'date'},{n:'vertrek',l:'Vertrek',t:'date'},{n:'gasten',l:'Gasten',t:'number',p:'2'}],
+    data:{h:['naam','type','personen','prijs/nacht'],r:[['Forest Lodge','lodge','4','€110'],['Family Cabin','cabin','6','€175'],['Villa Panorama','villa','8','€320']]}
+  },
+  reservering:{
+    sql:`<span class="sk">INSERT INTO</span> <span class="st">reserveringen</span>
+  (<span class="sf">gast_id</span>, <span class="sf">accommodatie_id</span>, <span class="sf">aankomst</span>, <span class="sf">vertrek</span>, <span class="sf">status</span>, <span class="sf">aangemaakt_op</span>)
+<span class="sk">VALUES</span>
+  (<span class="ss">:gast_id</span>, <span class="ss">:accommodatie_id</span>, <span class="ss">:aankomst</span>, <span class="ss">:vertrek</span>, <span class="ss">'bevestigd'</span>, <span class="sk">NOW()</span>);
+
+<span class="sc">-- Referentienummer ophalen:</span>
+<span class="sk">SELECT LAST_INSERT_ID()</span> <span class="sk">AS</span> <span class="sf">reservering_id</span>;`,
+    params:[{n:'gast_id',l:'Gast ID',t:'number',p:'1042'},{n:'accommodatie_id',l:'Accommodatie ID',t:'number',p:'3'},{n:'aankomst',l:'Aankomst',t:'date'},{n:'vertrek',l:'Vertrek',t:'date'}],
+    data:{h:['reservering_id','status','aangemaakt_op'],r:[['1387','bevestigd','2026-06-19 10:42:31']]}
+  },
+  gasten:{
+    sql:`<span class="sk">SELECT</span> g.<span class="sf">id</span>, g.<span class="sf">voornaam</span>, g.<span class="sf">achternaam</span>, g.<span class="sf">email</span>,
+  <span class="sk">COUNT</span>(r.<span class="sf">id</span>) <span class="sk">AS</span> <span class="sf">aantal_bezoeken</span>
+<span class="sk">FROM</span> <span class="st">gasten</span> g
+<span class="sk">LEFT JOIN</span> <span class="st">reserveringen</span> r <span class="sk">ON</span> r.<span class="sf">gast_id</span> = g.<span class="sf">id</span>
+<span class="sk">WHERE</span> g.<span class="sf">email</span> <span class="sk">LIKE</span> <span class="ss">:zoekterm</span>
+   <span class="sk">OR</span> g.<span class="sf">achternaam</span> <span class="sk">LIKE</span> <span class="ss">:zoekterm</span>
+<span class="sk">GROUP BY</span> g.<span class="sf">id</span>
+<span class="sk">ORDER BY</span> <span class="sf">aantal_bezoeken</span> <span class="sk">DESC</span>
+<span class="sk">LIMIT</span> <span class="sn">20</span>;`,
+    params:[{n:'zoekterm',l:'Naam of e-mail',t:'text',p:'%de vries%'}],
+    data:{h:['id','voornaam','achternaam','email','bezoeken'],r:[['204','Anna','de Vries','anna@mail.nl','5'],['89','Pieter','de Vries','p.devries@home.nl','2']]}
+  },
+  bezetting:{
+    sql:`<span class="sk">SELECT</span>
+  <span class="sk">MONTH</span>(r.<span class="sf">aankomst</span>) <span class="sk">AS</span> <span class="sf">maand</span>,
+  <span class="sk">COUNT</span>(r.<span class="sf">id</span>) <span class="sk">AS</span> <span class="sf">reserveringen</span>,
+  <span class="sk">ROUND</span>(<span class="sk">COUNT</span>(r.<span class="sf">id</span>) / a.<span class="sf">totaal</span> * <span class="sn">100</span>, <span class="sn">1</span>) <span class="sk">AS</span> <span class="sf">bezetting_pct</span>
+<span class="sk">FROM</span> <span class="st">reserveringen</span> r
+<span class="sk">CROSS JOIN</span> (<span class="sk">SELECT COUNT</span>(*) <span class="sk">AS</span> <span class="sf">totaal</span> <span class="sk">FROM</span> <span class="st">accommodaties</span>) a
+<span class="sk">WHERE</span> <span class="sk">YEAR</span>(r.<span class="sf">aankomst</span>) = <span class="sn">:jaar</span>
+  <span class="sk">AND</span> r.<span class="sf">status</span> != <span class="ss">'geannuleerd'</span>
+<span class="sk">GROUP BY</span> <span class="sf">maand</span>, a.<span class="sf">totaal</span>
+<span class="sk">ORDER BY</span> <span class="sf">maand</span>;`,
+    params:[{n:'jaar',l:'Jaar',t:'number',p:'2026'}],
+    data:{h:['maand','reserveringen','bezetting %'],r:[['jan','18','52.9%'],['feb','22','64.7%'],['mrt','28','82.4%'],['apr','31','91.2%'],['mei','34','100%'],['jun','33','97.1%']]}
+  }
+};
+
+let activeQ='beschikbaar';
+function renderQ(key){
+  activeQ=key;
+  const q=queries[key];
+  document.getElementById('dbSql').innerHTML=q.sql;
+  const pc=document.getElementById('dbParams');
+  pc.innerHTML='';
+  q.params.forEach(p=>{
+    const d=document.createElement('div');d.className='db-param';
+    const l=document.createElement('label');l.textContent=p.l;
+    const i=document.createElement('input');
+    i.type=p.t||'text';i.placeholder=p.p||'';
+    if(p.t==='date'){i.value=tomorrow();}
+    d.appendChild(l);d.appendChild(i);pc.appendChild(d);
+  });
+  document.getElementById('dbResults').style.display='none';
+  document.getElementById('dbStatus').innerHTML='';
+  document.getElementById('dbTimer').textContent='';
+}
+document.querySelectorAll('.db-tab[data-q]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.db-tab[data-q]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderQ(b.dataset.q);
+  });
+});
+document.getElementById('dbRun').addEventListener('click',()=>{
+  const t0=Date.now(),btn=document.getElementById('dbRun');
+  btn.textContent='⏳ Laden...';btn.disabled=true;
+  setTimeout(()=>{
+    const q=queries[activeQ];
+    let html='<table><thead><tr>'+q.data.h.map(h=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>';
+    q.data.r.forEach(r=>{html+='<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>';});
+    html+='</tbody></table>';
+    const el=document.getElementById('dbResults');el.innerHTML=html;el.style.display='block';
+    const ms=Date.now()-t0;
+    document.getElementById('dbStatus').innerHTML=`<span class="ok">✓ OK</span> — ${q.data.r.length} rijen · ${ms}ms`;
+    document.getElementById('dbTimer').textContent=ms+'ms';
+    btn.textContent='▶ Uitvoeren';btn.disabled=false;
+  },280);
+});
+document.getElementById('dbReset').addEventListener('click',()=>renderQ(activeQ));
+renderQ('beschikbaar');
+</script>
 </body>
 </html>

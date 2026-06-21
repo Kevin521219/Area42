@@ -1,0 +1,867 @@
+/* =====================================================
+   AREA42 UPDATE
+   style.css — Redesign van Area52 naar Area42
+   Nieuwe huisstijl: natuur, luxe, wellness, beleving
+   ===================================================== */
+
+/* =====================================================
+   0. RESET & BASE
+   Zelfde aanpak als Area52 maar met nieuwe tokens
+   ===================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* AREA42 UPDATE */
+/* Typografie gewijzigd naar Poppins (koppen) + Open Sans (body) */
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #4E342E;
+  background-color: #F5F0E6;
+  line-height: 1.7;
+}
+
+/* AREA42 UPDATE */
+/* Nieuwe kleurpalet: aardse tonen, geen futuristische kleuren */
+:root {
+  --primary:     #4E342E;   /* Warm donkerbruin */
+  --secondary:   #A1887F;   /* Zacht taupe */
+  --bg:          #F5F0E6;   /* Crème achtergrond */
+  --white:       #FFFFFF;
+  --accent:      #5C7C5C;   /* Bos-groen */
+  --accent-light:#8FAF8F;   /* Licht groen voor hovers */
+  --border:      #D7CCC8;   /* Zachte rand */
+  --text-muted:  #8D6E63;   /* Gedempte tekst */
+}
+
+/* =====================================================
+   1. TYPOGRAFIE
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Koppen: Poppins SemiBold — geeft luxe en rust */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+h3 { font-size: 1.4rem; }
+
+p { font-size: 1rem; color: var(--primary); opacity: 0.85; }
+
+/* =====================================================
+   2. NAVIGATIE
+   Zelfde Bootstrap navbar structuur als Area52, nieuwe stijl
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Navigatie gewijzigd naar wit met bruine branding — geen felle kleuren */
+.navbar {
+  background-color: var(--white) !important;
+  background-image: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 1.1rem 0 !important;
+  box-shadow: 0 2px 12px rgba(78, 52, 46, 0.08);
+  z-index: 1000;
+}
+
+/* AREA42 UPDATE */
+/* Logo: Poppins SemiBold, bruine kleur */
+.brand-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: var(--primary) !important;
+  text-decoration: none;
+}
+
+.logo-main {
+  font-size: 1.5rem;
+  color: var(--primary) !important;
+  letter-spacing: 0.08em;
+  text-shadow: none !important;
+}
+
+.logo-sub {
+  font-size: 0.65rem;
+  color: var(--accent) !important;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* AREA42 UPDATE */
+/* Navigatielinks: bruin, rustig — geen witte letters op kleuren */
+.nav-link, .pill-link {
+  color: var(--primary) !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  padding: 6px 18px !important;
+  transition: color 0.2s ease;
+  text-shadow: none;
+}
+
+.nav-link:hover {
+  color: var(--accent) !important;
+  transform: none;
+}
+
+.nav-link.active-page {
+  color: var(--accent) !important;
+  border-bottom: 2px solid var(--accent);
+}
+
+/* AREA42 UPDATE */
+/* CTA knop: bosgroen met witte tekst — geen lime groen */
+.btn-cta {
+  background-color: var(--accent) !important;
+  color: var(--white) !important;
+  border: none !important;
+  padding: 10px 28px;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 3px 10px rgba(92, 124, 92, 0.35) !important;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn-cta:hover {
+  background-color: #4a6b4a !important;
+  color: var(--white) !important;
+  box-shadow: 0 5px 18px rgba(92, 124, 92, 0.45) !important;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background-color: transparent !important;
+  color: var(--primary) !important;
+  border: 2px solid var(--primary) !important;
+  padding: 10px 28px;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+/* =====================================================
+   3. OFFCANVAS MENU
+   Zelfde Bootstrap offcanvas als Area52, nieuwe stijl
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Menu: warm bruin, geen felle roze — past bij luxe vakantiepark */
+.extra-menu {
+  background-color: var(--primary) !important;
+  border-left: 4px solid var(--accent);
+}
+
+.extra-menu .offcanvas-header {
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding: 1.5rem;
+}
+
+.extra-link {
+  display: block;
+  color: var(--white) !important;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 14px 30px;
+  transition: all 0.25s ease;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.extra-link:hover {
+  color: var(--accent-light) !important;
+  padding-left: 42px;
+}
+
+.btn-close-white {
+  width: 1.5em;
+  height: 1.5em;
+  opacity: 0.85;
+}
+
+/* =====================================================
+   4. HERO SECTIE
+   Zelfde video-container structuur als Area52
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Hero aangepast: donkere warm overlay i.p.v. paars — natuur-gevoel */
+.hero-video-container {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+  background-color: var(--primary);
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%; left: 50%;
+  min-width: 100%; min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 1;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(
+    160deg,
+    rgba(78, 52, 46, 0.65) 0%,
+    rgba(92, 124, 92, 0.35) 100%
+  );
+  z-index: 2;
+}
+
+.hero-content-overlay {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  z-index: 3;
+  padding: 0 0 80px 0;
+}
+
+/* AREA42 UPDATE */
+/* Hero tekst: wit, rustig — geen hoofdletters met schaduw */
+.hero-content-overlay h1 {
+  font-family: 'Poppins', sans-serif !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-size: clamp(2.5rem, 6vw, 5rem) !important;
+  text-transform: none !important;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.35) !important;
+  max-width: 800px;
+}
+
+.hero-eyebrow {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  font-family: 'Open Sans', sans-serif;
+  color: rgba(255,255,255,0.82);
+  font-size: 1.15rem;
+  margin-top: 16px;
+  max-width: 560px;
+}
+
+/* =====================================================
+   5. SECTIE LAYOUT — MODULAIRE BLOKKEN
+   Zelfde grid aanpak als Area52, nieuwe witruimte logica
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Secties: meer witruimte, duidelijke hiërarchie */
+.section {
+  padding: 90px 0;
+}
+
+.section-sm {
+  padding: 60px 0;
+}
+
+.section-alt {
+  background-color: var(--white);
+  background-image: none;
+}
+
+/* AREA42 UPDATE */
+/* Sectie label/eyebrow boven koppen */
+.section-eyebrow {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  color: var(--primary) !important;
+  text-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: -0.02em;
+}
+
+.section-body {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 520px;
+}
+
+/* =====================================================
+   6. AFBEELDING + TEKST BLOKKEN (2-KOLOM)
+   Gebaseerd op Giran Republic / Figma modulaire layout
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Links tekst, rechts emotionele foto — Airbnb/Center Parcs aanpak */
+.split-block {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 80px;
+}
+
+.split-block.reverse { flex-direction: row-reverse; }
+
+.split-text { flex: 1; }
+.split-image { flex: 1; }
+
+.split-image img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(78, 52, 46, 0.18);
+}
+
+/* =====================================================
+   7. KAARTEN
+   Zelfde structuur als Area52 accommodation-card, nieuwe stijl
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Kaarten: wit, ronde hoeken, subtiele schaduw — geen felle randen */
+.area42-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  box-shadow: 0 4px 20px rgba(78, 52, 46, 0.08);
+}
+
+.area42-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(78, 52, 46, 0.16);
+}
+
+.area42-card .card-img-top {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.area42-card .card-body {
+  padding: 28px;
+}
+
+.area42-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.area42-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.price-tag {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--primary) !important;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.price-tag span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* =====================================================
+   8. FEATURE / HIGHLIGHT BLOK
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Feature blok: groen accent, horizontaal icoon + tekst */
+.feature-item {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(92, 124, 92, 0.12);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+
+.feature-text h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.feature-text p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* =====================================================
+   9. STATISTIEKEN / TRUST BALK
+   ===================================================== */
+.stat-block {
+  text-align: center;
+  padding: 40px 20px;
+  border-right: 1px solid var(--border);
+}
+
+.stat-block:last-child { border-right: none; }
+
+.stat-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 6px;
+}
+
+/* =====================================================
+   10. CONTACTFORMULIER
+   Zelfde opzet als Area52, maar gestript en verfijnd
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Formulier: rustige stijl, groene focus — geen roze */
+.form-card {
+  background-color: var(--white);
+  border-radius: 20px;
+  padding: 48px;
+  box-shadow: 0 8px 40px rgba(78, 52, 46, 0.1);
+  border: 1px solid var(--border);
+}
+
+.form-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  border: 1.5px solid var(--border) !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--primary);
+  background-color: var(--bg);
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(92, 124, 92, 0.18) !important;
+  background-color: var(--white) !important;
+}
+
+.form-control::placeholder { color: var(--secondary); }
+
+/* =====================================================
+   11. FOOTER
+   Zelfde structuur als Area52 footer, nieuwe kleuren
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Footer: donkerbruin, rustig — geen felle kleuren */
+.area-footer {
+  background-color: var(--primary) !important;
+  background-image: none !important;
+  color: var(--white) !important;
+  padding: 70px 0 0 0 !important;
+}
+
+.area-footer h5 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-light) !important;
+  text-shadow: none !important;
+  margin-bottom: 18px;
+}
+
+.area-footer a {
+  color: rgba(255,255,255,0.75) !important;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.area-footer a:hover {
+  color: var(--white) !important;
+  transform: translateX(4px);
+}
+
+.footer-logo {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--white) !important;
+  letter-spacing: 0.06em;
+}
+
+.footer-tagline {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+.footer-bottom {
+  background-color: rgba(0,0,0,0.2) !important;
+  background-image: none !important;
+  padding: 22px 0 !important;
+  margin-top: 50px;
+}
+
+.footer-bottom p {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* =====================================================
+   12. ACCORDION / FAQ
+   Zelfde Bootstrap accordion, nieuwe stijl
+   ===================================================== */
+/* AREA42 UPDATE */
+/* FAQ: subtiele bruine randen, geen felle roze */
+.accordion-item {
+  background-color: var(--white) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: 12px !important;
+  margin-bottom: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(78,52,46,0.06);
+}
+
+.accordion-button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--primary) !important;
+  text-transform: none;
+  padding: 20px 24px;
+  background-color: var(--white) !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--primary) !important;
+  color: var(--white) !important;
+  box-shadow: none;
+}
+
+.accordion-button::after {
+  filter: none;
+}
+
+.accordion-button:not(.collapsed)::after {
+  filter: invert(1);
+}
+
+.accordion-body {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  padding: 20px 24px;
+  background-color: var(--bg);
+}
+
+/* =====================================================
+   13. BREADCRUMB / PAGE HERO (ZONDER VIDEO)
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Stille hero voor sub-pagina's: geen video, crème achtergrond */
+.page-hero {
+  background-color: var(--primary);
+  padding: 100px 0 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 400px; height: 100%;
+  background: rgba(92, 124, 92, 0.15);
+  clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.page-hero h1 {
+  color: var(--white) !important;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  text-transform: none !important;
+  letter-spacing: -0.02em;
+}
+
+.page-hero .hero-eyebrow {
+  color: var(--accent-light);
+}
+
+/* =====================================================
+   14. BOOKING WIDGET (HOMEPAGE)
+   ===================================================== */
+/* AREA42 UPDATE */
+/* Boekingswidget: zwevend boven hero, crème achtergrond */
+.booking-widget {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 28px 36px;
+  box-shadow: 0 20px 60px rgba(78, 52, 46, 0.2);
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.booking-widget .form-group { flex: 1; min-width: 160px; }
+
+.booking-widget .form-group label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.booking-widget input,
+.booking-widget select {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--primary);
+  background: var(--bg);
+  appearance: none;
+}
+
+.booking-widget input:focus,
+.booking-widget select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(92,124,92,0.15);
+}
+
+/* =====================================================
+   15. BANNER / CTA SECTIE
+   ===================================================== */
+.cta-banner {
+  background-color: var(--accent);
+  padding: 80px 0;
+  text-align: center;
+}
+
+.cta-banner h2 {
+  color: var(--white) !important;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+
+.cta-banner p {
+  color: rgba(255,255,255,0.82);
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin: 16px auto 32px;
+}
+
+.btn-cta-white {
+  background-color: var(--white) !important;
+  color: var(--accent) !important;
+  border: none !important;
+  padding: 13px 36px;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-cta-white:hover {
+  background-color: var(--bg) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* =====================================================
+   16. REVIEW / QUOTE BLOK
+   ===================================================== */
+.review-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(78,52,46,0.07);
+}
+
+.review-stars {
+  color: #D4A017;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+.review-text {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.review-author {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--primary);
+}
+
+.activity-img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:12px 12px 0 0;
+}
+
+/* =====================================================
+   17. RESPONSIVE
+   Zelfde mobile-first als Area52
+   ===================================================== */
+@media (max-width: 768px) {
+  .split-block, .split-block.reverse {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .split-image img {
+    height: 280px;
+  }
+
+  .booking-widget {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .booking-widget .form-group {
+    width: 100%;
+  }
+
+  .hero-video-container {
+    height: 70vh;
+  }
+
+  .hero-content-overlay {
+    padding: 0 0 50px 0;
+  }
+
+  .section { padding: 60px 0; }
+
+  .form-card { padding: 28px 24px; }
+
+  .stat-block {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-block:last-child { border-bottom: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+fetch('/api/reservation', {
+    method:'POST',
+    body:JSON.stringify(data)
+});
+[HttpPost]
+public async Task<IActionResult> Reserve(...)
+{
+   // opslaan database
+
+   await emailService.SendAsync(
+      gebruiker.Email,
+      "Reservering bevestigd",
+      "Bedankt voor uw reservering"
+   );
+
+   return Ok();
+}
+
+v
