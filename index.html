@@ -1,376 +1,1993 @@
 <!DOCTYPE html>
-<!-- AREA42 UPDATE -->
-<!-- Volledige herontwerp van index.html (Area52 → Area42) -->
-<!-- Stijl: natuur, luxe, wellness -->
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Area 42 | Vakantiepark in de Natuur</title>
+  <title>Area42 | Vakantiepark in de Natuur</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Area 42 Vakantiepark — ontspan, beleef en geniet midden in de natuur. Luxe accommodaties, wellness en avontuur voor het hele gezin.">
-
-  <!-- AREA42 UPDATE -->
-  <!-- Typografie gewijzigd naar Poppins + Open Sans (Google Fonts) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ========================================
+       AREA42 — CSS TOKENS & RESET
+       ======================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:       #3E2723;   /* Donkerbruin — hoofdkleur */
+      --primary-light: #5D4037;   /* Iets lichter bruin */
+      --secondary:     #A1887F;   /* Taupe */
+      --bg:            #F5F0E6;   /* Crème */
+      --white:         #FFFFFF;
+      --accent:        #5C7C5C;   /* Bosgroen */
+      --accent-dark:   #3E5E3E;   /* Donkerder groen voor hover */
+      --accent-btn:    #6B8F5E;   /* Knop groen — goed contrast op wit */
+      --border:        #D7CCC8;
+      --text-muted:    #795548;
+      --card-shadow:   0 4px 24px rgba(62,39,35,0.12);
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--primary);
+      line-height: 1.7;
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    /* ========================================
+       BUTTONS — Gefixte contrast versie
+       Probleem: groene knop op crème viel weg
+       Oplossing: donkerder groen + witte tekst + border
+       ======================================== */
+    .btn-primary-42 {
+      display: inline-block;
+      background-color: var(--primary);
+      color: #FFFFFF !important;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 12px 28px;
+      border-radius: 6px;
+      border: 2px solid var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary-42:hover {
+      background-color: var(--primary-light);
+      border-color: var(--primary-light);
+      color: #fff !important;
+      transform: translateY(-1px);
+    }
+
+    /* Groene CTA — alleen voor primaire conversie-actie */
+    .btn-accent-42 {
+      display: inline-block;
+      background-color: var(--accent-btn);
+      color: #FFFFFF !important;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 12px 28px;
+      border-radius: 6px;
+      border: 2px solid var(--accent-btn);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-accent-42:hover {
+      background-color: var(--accent-dark);
+      border-color: var(--accent-dark);
+      color: #fff !important;
+      transform: translateY(-1px);
+    }
+
+    /* Ghost knop op donkere achtergrond */
+    .btn-ghost-42 {
+      display: inline-block;
+      background-color: transparent;
+      color: #FFFFFF !important;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 11px 26px;
+      border-radius: 6px;
+      border: 2px solid rgba(255,255,255,0.75);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ghost-42:hover {
+      background-color: rgba(255,255,255,0.15);
+      border-color: #fff;
+      color: #fff !important;
+    }
+
+    /* Kleine kaart-knop */
+    .btn-card-42 {
+      display: inline-block;
+      background-color: var(--primary);
+      color: #FFFFFF !important;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 8px 18px;
+      border-radius: 5px;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .btn-card-42:hover {
+      background-color: var(--primary-light);
+      color: #fff !important;
+    }
+
+    /* ========================================
+       NAVIGATIE
+       ======================================== */
+    .navbar-42 {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background-color: rgba(62, 39, 35, 0.97);
+      backdrop-filter: blur(10px);
+      padding: 0 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px;
+    }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: #FFFFFF;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+    }
+    .nav-logo span { color: var(--accent-btn); }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 7px 14px;
+      border-radius: 5px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover {
+      color: #fff;
+      background-color: rgba(255,255,255,0.08);
+    }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* Mobile menu */
+    .nav-mobile {
+      display: none;
+      background-color: var(--primary);
+      padding: 12px 24px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a {
+      display: block;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: #fff; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+
+    /* ========================================
+       HERO — Eigen afbeelding inzetbaar
+       ======================================== */
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    /* Hero achtergrond — vervang URL voor je eigen afbeelding */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('hero-image.jpg'); /* ← JE EIGEN AFBEELDING HIER */
+      background-size: cover;
+      background-position: center;
+      background-color: #3E2723; /* Fallback kleur als afbeelding ontbreekt */
+    }
+
+    /* Placeholder met instructie (verwijder dit als je afbeelding er in staat) */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(62,39,35,0.82) 0%,
+        rgba(62,39,35,0.45) 50%,
+        rgba(30,20,15,0.65) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 0 70px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent-btn);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 700 !important;
+      font-size: clamp(2.4rem, 5.5vw, 4.4rem) !important;
+      color: #FFFFFF !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.02em;
+      max-width: 680px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .hero-sub {
+      color: rgba(255,255,255,0.82);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin-top: 16px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    /* Upload hint badge */
+    .hero-upload-hint {
+      position: absolute;
+      top: 90px;
+      right: 24px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Poppins', sans-serif;
+      z-index: 3;
+      max-width: 220px;
+      line-height: 1.5;
+    }
+    .hero-upload-hint strong { color: #fff; display: block; margin-bottom: 3px; }
+
+    @media (max-width: 768px) {
+      .hero-section { height: 85vh; min-height: 500px; }
+      .hero-content { padding: 0 0 50px; }
+      .hero-upload-hint { display: none; }
+    }
+
+    /* ========================================
+       BOOKING WIDGET
+       Gefixte datumvalidatie — verleden blokkeren
+       ======================================== */
+    .booking-bar {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(62,39,35,0.18);
+      padding: 24px 28px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-top: -48px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .booking-field {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .booking-field label {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 6px;
+    }
+
+    .booking-field input,
+    .booking-field select {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--primary);
+      background-color: var(--bg);
+      appearance: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .booking-field input:focus,
+    .booking-field select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background-color: var(--white);
+      box-shadow: 0 0 0 3px rgba(92,124,92,0.15);
+    }
+    .booking-field input.date-error {
+      border-color: #C62828;
+      box-shadow: 0 0 0 3px rgba(198,40,40,0.12);
+    }
+
+    .date-error-msg {
+      display: none;
+      color: #C62828;
+      font-size: 0.75rem;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .date-error-msg.show { display: block; }
+
+    .booking-field.submit-field { flex: 0; min-width: auto; }
+
+    @media (max-width: 640px) {
+      .booking-bar { flex-direction: column; margin-top: -28px; border-radius: 8px; }
+      .booking-field { width: 100%; min-width: 100%; }
+      .booking-field.submit-field { width: 100%; }
+      .booking-field.submit-field .btn-accent-42 { width: 100%; text-align: center; }
+    }
+
+    /* ========================================
+       SECTIES — GENERIEK
+       ======================================== */
+    .section-pad { padding: 80px 0; }
+    .section-pad-sm { padding: 56px 0; }
+    .section-alt { background-color: var(--white); }
+
+    .section-eyebrow {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-btn);
+      margin-bottom: 10px;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .section-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .see-all-link {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .see-all-link:hover { color: var(--primary); }
+    .see-all-link::after { content: '→'; }
+
+    /* ========================================
+       KAARTEN — Accommodaties & Activiteiten
+       ======================================== */
+    .card-42 {
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-42:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(62,39,35,0.16);
+    }
+
+    .card-img-42 {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #8FAF8F 0%, #5C7C5C 100%);
+    }
+
+    /* Kleur-placeholders voor kaarten */
+    .card-img-placeholder {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.75rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .card-body-42 {
+      padding: 20px 22px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--secondary);
+      margin-bottom: 5px;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .card-title-42 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .card-desc-42 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .card-footer-42 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .card-price {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
+    .card-price small {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--secondary);
+    }
+
+    /* ========================================
+       RESTAURANTS SECTIE (HORIZONTALE KAARTEN)
+       ======================================== */
+    .restaurant-card {
+      display: flex;
+      gap: 0;
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.25s;
+      height: 100%;
+    }
+    .restaurant-card:hover { transform: translateY(-4px); }
+
+    .restaurant-img {
+      width: 120px;
+      min-height: 130px;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .restaurant-img-placeholder {
+      width: 120px;
+      min-height: 130px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .restaurant-body {
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .restaurant-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .restaurant-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .restaurant-price {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent-dark);
+    }
+
+    /* ========================================
+       STATS BALK
+       ======================================== */
+    .stats-section {
+      background-color: var(--primary);
+      padding: 50px 0;
+    }
+
+    .stat-item { text-align: center; padding: 10px 20px; }
+
+    .stat-number {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      color: #FFFFFF;
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 6px;
+      display: block;
+    }
+
+    .stats-divider {
+      border-left: 1px solid rgba(255,255,255,0.12);
+      height: 50px;
+      align-self: center;
+    }
+
+    /* ========================================
+       CTA BANNER
+       ======================================== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      color: #FFFFFF !important;
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+    }
+    .cta-section p {
+      color: rgba(255,255,255,0.82);
+      max-width: 500px;
+      margin: 14px auto 32px;
+      font-size: 1rem;
+    }
+
+    /* ========================================
+       DATABASE QUERY SECTIE
+       ======================================== */
+    .db-section {
+      background-color: #1A1A1A;
+      padding: 70px 0;
+    }
+
+    .db-panel {
+      background: #0D0D0D;
+      border-radius: 12px;
+      border: 1px solid #2A2A2A;
+      overflow: hidden;
+    }
+
+    .db-panel-header {
+      background: #161616;
+      padding: 14px 20px;
+      border-bottom: 1px solid #2A2A2A;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .db-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+
+    .db-panel-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      margin-left: 8px;
+    }
+
+    .db-panel-body { padding: 20px; }
+
+    /* Query selector tabs */
+    .query-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .query-tab {
+      background: #1E1E1E;
+      border: 1px solid #333;
+      color: rgba(255,255,255,0.55);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .query-tab:hover { border-color: var(--accent); color: rgba(255,255,255,0.85); }
+    .query-tab.active {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+      color: #fff;
+    }
+
+    /* Code vak */
+    .db-code {
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: #A5D6A7;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 80px;
+    }
+
+    .sql-keyword { color: #80CBC4; font-weight: bold; }
+    .sql-string  { color: #CE9178; }
+    .sql-comment { color: #608B4E; }
+    .sql-number  { color: #B5CEA8; }
+    .sql-table   { color: #4EC9B0; }
+    .sql-field   { color: #9CDCFE; }
+
+    /* Parameters vak */
+    .db-params {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .db-param {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .db-param label {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 5px;
+    }
+
+    .db-param input, .db-param select {
+      width: 100%;
+      background: #1A1A1A;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 9px 12px;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+    .db-param input:focus, .db-param select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .db-param select option { background: #1A1A1A; }
+
+    /* Resultaten tabel */
+    .db-results {
+      margin-top: 16px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #252525;
+    }
+
+    .db-results table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .db-results th {
+      background: #161616;
+      color: rgba(255,255,255,0.55);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #252525;
+    }
+
+    .db-results td {
+      padding: 10px 14px;
+      color: rgba(255,255,255,0.8);
+      border-bottom: 1px solid #1E1E1E;
+      font-family: 'Courier New', monospace;
+    }
+
+    .db-results tr:last-child td { border-bottom: none; }
+    .db-results tr:hover td { background: rgba(255,255,255,0.03); }
+
+    .db-status {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 10px;
+      padding: 0 4px;
+    }
+
+    .db-status .ok { color: #81C784; font-weight: 600; }
+    .db-status .err { color: #EF9A9A; font-weight: 600; }
+
+    .db-section-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      color: #FFFFFF;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+    .db-section-sub {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.88rem;
+      margin-bottom: 28px;
+    }
+
+    /* Schema badge */
+    .schema-badge {
+      display: inline-block;
+      background: #1E1E1E;
+      border: 1px solid #2A2A2A;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #4EC9B0;
+      margin: 2px 3px;
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer-42 {
+      background-color: var(--primary);
+      padding: 60px 0 0;
+    }
+
+    .footer-brand {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #FFFFFF;
+      letter-spacing: 0.1em;
+    }
+    .footer-brand span { color: var(--accent-btn); }
+
+    .footer-tagline {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.85rem;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .footer-col h6 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-btn);
+      margin-bottom: 16px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.875rem;
+      margin-bottom: 9px;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .footer-col a:hover {
+      color: #fff;
+      transform: translateX(3px);
+    }
+
+    .footer-bottom-bar {
+      background: rgba(0,0,0,0.25);
+      margin-top: 50px;
+      padding: 18px 0;
+    }
+    .footer-bottom-bar p {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.82rem;
+      margin: 0;
+    }
+    .footer-bottom-bar a {
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      margin-left: 16px;
+    }
+    .footer-bottom-bar a:hover { color: rgba(255,255,255,0.65); }
+
+    /* ========================================
+       REVIEWS
+       ======================================== */
+    .review-card-42 {
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      height: 100%;
+    }
+
+    .review-stars { color: #BF8C30; font-size: 0.9rem; margin-bottom: 12px; }
+
+    .review-text {
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+
+    .review-author {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--primary);
+    }
+
+    /* ========================================
+       RESPONSIVE — GRID FIXES
+       ======================================== */
+    @media (max-width: 991px) {
+      .section-pad { padding: 60px 0; }
+      .section-pad-sm { padding: 40px 0; }
+      .stats-divider { display: none; }
+    }
+
+    @media (max-width: 576px) {
+      .section-pad { padding: 48px 0; }
+      .restaurant-card { flex-direction: column; }
+      .restaurant-img-placeholder, .restaurant-img { width: 100%; height: 120px; }
+      .card-img-42, .card-img-placeholder { height: 170px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- AREA42 UPDATE -->
-<!-- Offcanvas menu: zelfde Bootstrap structuur, nieuwe bruine stijl -->
-<div class="offcanvas offcanvas-end extra-menu" tabindex="-1" id="extraMenu">
-  <div class="offcanvas-header">
-    <span class="footer-logo">AREA 42</span>
-    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body d-flex flex-column justify-content-between">
-    <nav>
-      <a href="index.html" class="extra-link">Home</a>
-      <a href="accommodatie.html" class="extra-link">Accommodaties</a>
-      <a href="activiteiten.html" class="extra-link">Activiteiten</a>
-      <a href="horeca.html" class="extra-link">Restaurants</a>
-      <a href="contact.html" class="extra-link">Contact</a>
-      <a href="faq.html" class="extra-link">FAQ</a>
-    </nav>
-    <div class="pb-5">
-      <a href="reservering.html" class="btn-cta d-block text-center mt-4">Boek je verblijf</a>
-      <p class="mt-3" style="color:rgba(255,255,255,0.45);font-size:0.8rem;text-align:center;">+31 (0)55 123 45 67 · info@area42.nl</p>
-    </div>
-  </div>
-</div>
+<!-- ================================================
+     NAVIGATIE
+     ================================================ -->
+<nav class="navbar-42" id="mainNav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">AREA<span>42</span></a>
 
-<!-- AREA42 UPDATE -->
-<!-- Navigatie: wit met bruine branding  -->
-<header class="site-header">
-  <nav class="navbar navbar-expand-lg">
+    <ul class="nav-links">
+      <li><a href="#accommodaties">Accommodaties</a></li>
+      <li><a href="#activiteiten">Activiteiten</a></li>
+      <li><a href="#restaurants">Restaurants</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li style="margin-left:8px;">
+        <a href="#reserveren" class="btn-accent-42" style="padding:9px 20px;">Reserveer nu</a>
+      </li>
+    </ul>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu openen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="#accommodaties">Accommodaties</a>
+    <a href="#activiteiten">Activiteiten</a>
+    <a href="#restaurants">Restaurants</a>
+    <a href="#contact">Contact</a>
+    <a href="#reserveren" style="color:var(--accent-btn);font-weight:700;">Reserveer nu →</a>
+  </div>
+</nav>
+
+
+<!-- ================================================
+     HERO SECTIE
+     Vervang 'hero-image.jpg' met je eigen afbeelding
+     ================================================ -->
+<section class="hero-section" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+
+  <!-- Upload hint — verwijder dit blok als afbeelding is ingesteld -->
+  <div class="hero-upload-hint">
+    <strong>📷 Eigen afbeelding</strong>
+    Vervang <code>hero-image.jpg</code> in de CSS met jouw foto
+  </div>
+
+  <div class="hero-content">
     <div class="container">
-      <a class="navbar-brand brand-logo" href="index.html">
-        <span class="logo-main">AREA 42</span>
-        <span class="logo-sub">Vakantiepark</span>
-      </a>
-
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-label="Menu openen">
-        <span class="navbar-toggler-icon" style="filter: invert(1) sepia(1) saturate(0);"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navContent">
-        <ul class="navbar-nav mx-auto text-center">
-          <li class="nav-item"><a class="nav-link pill-link active-page" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link pill-link" href="accommodatie.html">Accommodaties</a></li>
-          <li class="nav-item"><a class="nav-link pill-link" href="horeca.html">Restaurants</a></li>
-          <li class="nav-item"><a class="nav-link pill-link" href="activiteiten.html">Activiteiten</a></li>
-        </ul>
-        <div class="d-flex gap-2 align-items-center">
-          <a href="inloggen.html" class="btn-outline d-none d-lg-inline-block">Inloggen</a>
-          <a href="reservering.html" class="btn-cta">Reserveren</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-</header>
-
-<!-- AREA42 UPDATE -->
-<!-- Hero sectie: video achtergrond met warme overlay en links uitgelijnde tekst -->
-<!--  groots, emotioneel, minimale tekst -->
-<section class="hero-video-container">
-  <video autoplay muted loop playsinline class="hero-video">
-    <source src="area52_promo.mp4" type="video/mp4">
-  </video>
-  <div class="video-overlay"></div>
-  <div class="hero-content-overlay">
-    <div class="container">
-      <span class="hero-eyebrow">Welkom bij Area 42</span>
-      <h1>Rust vinden<br>midden in de natuur</h1>
-      <p class="hero-sub">Verborgen in de bossen van de Veluwe — voor families, stellen en iedereen die even wil opladen.</p>
-      <div class="d-flex gap-3 mt-4 flex-wrap">
-        <a href="accommodatie.html" class="btn-cta" style="padding:14px 36px;font-size:1rem;">Ontdek verblijven</a>
-        <a href="activiteiten.html" class="btn-outline" style="padding:14px 36px;font-size:1rem;color:white;border-color:rgba(255,255,255,0.6);">Bekijk activiteiten</a>
+      <span class="hero-eyebrow">Welkom bij Area42</span>
+      <h1 class="hero-title">Jouw avontuur<br>begint bij Area42</h1>
+      <p class="hero-sub">Ontdek unieke accommodaties, activiteiten en restaurants midden in de natuur.</p>
+      <div class="hero-actions">
+        <a href="#accommodaties" class="btn-accent-42" style="padding:14px 32px;font-size:0.95rem;">Bekijk accommodaties</a>
+        <a href="#activiteiten" class="btn-ghost-42" style="padding:14px 32px;font-size:0.95rem;">Ontdek activiteiten</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AREA42 UPDATE -->
-<!-- Boekingswidget direct onder de hero — Center Parcs aanpak -->
-<div class="container" style="margin-top:-40px;position:relative;z-index:10;">
-  <div class="booking-widget">
-    <div class="form-group">
-      <label for="aankomst">Aankomst</label>
-      <input type="date" id="aankomst" name="aankomst">
-    </div>
-    <div class="form-group">
-      <label for="vertrek">Vertrek</label>
-      <input type="date" id="vertrek" name="vertrek">
-    </div>
-    <div class="form-group">
-      <label for="gasten">Gasten</label>
-      <select id="gasten" name="gasten">
-        <option>1 persoon</option>
-        <option>2 personen</option>
-        <option>3 personen</option>
-        <option>4 personen</option>
-        <option>5+ personen</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="type">Accommodatie</label>
-      <select id="type" name="type">
-        <option>Alle types</option>
-        <option>Forest Lodge</option>
-        <option>Wellness Suite</option>
-        <option>Family Villa</option>
-      </select>
-    </div>
-    <div class="form-group" style="min-width:auto;flex:0;">
-      <a href="reservering.html" class="btn-cta" style="padding:12px 30px;white-space:nowrap;">Zoeken</a>
-    </div>
-  </div>
-</div>
 
-<!-- AREA42 UPDATE -->
-<!-- Trust-balk: statistieken voor sociale bewijsvoering -->
-<section class="section-sm section-alt">
+<!-- ================================================
+     BOOKING WIDGET
+     Datumvalidatie — verleden geblokkeerd
+     ================================================ -->
+<section id="reserveren">
   <div class="container">
-    <div class="row text-center">
-      <div class="col-6 col-md-3">
-        <div class="stat-block">
-          <span class="stat-number">1.200+</span>
-          <span class="stat-label">Tevreden families per jaar</span>
-        </div>
+    <div class="booking-bar">
+      <div class="booking-field">
+        <label for="aankomst">Aankomst</label>
+        <input type="date" id="aankomst" name="aankomst">
+        <span class="date-error-msg" id="aankomstError">Aankomst kan niet in het verleden liggen.</span>
       </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-block">
-          <span class="stat-number">42 ha</span>
-          <span class="stat-label">Bos en natuur</span>
-        </div>
+      <div class="booking-field">
+        <label for="vertrek">Vertrek</label>
+        <input type="date" id="vertrek" name="vertrek">
+        <span class="date-error-msg" id="vertrekError">Vertrekdatum moet na aankomst liggen.</span>
       </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-block">
-          <span class="stat-number">4.8 ★</span>
-          <span class="stat-label">Gemiddeld gastcijfer</span>
-        </div>
+      <div class="booking-field">
+        <label for="gasten">Gasten</label>
+        <select id="gasten" name="gasten">
+          <option>1 persoon</option>
+          <option selected>2 personen</option>
+          <option>3 personen</option>
+          <option>4 personen</option>
+          <option>5+ personen</option>
+        </select>
       </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-block">
-          <span class="stat-number">30 jaar</span>
-          <span class="stat-label">Vakantie-ervaring</span>
-        </div>
+      <div class="booking-field">
+        <label for="typeAcco">Type</label>
+        <select id="typeAcco" name="typeAcco">
+          <option value="">Alle types</option>
+          <option>Forest Lodge</option>
+          <option>Wellness Suite</option>
+          <option>Family Cabin</option>
+          <option>Villa Panorama</option>
+        </select>
+      </div>
+      <div class="booking-field submit-field">
+        <button class="btn-accent-42" id="searchBtn" style="padding:11px 26px;font-size:0.9rem;width:100%;">
+          Zoeken
+        </button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AREA42 UPDATE -->
-<!-- Split-blok: tekst links, afbeelding rechts — modulaire Figma layout -->
-<section class="section">
-  <div class="container">
-    <div class="split-block">
-      <div class="split-text">
-        <span class="section-eyebrow">Onze filosofie</span>
-        <h2 class="section-title mb-4">Een plek waar je écht tot rust komt</h2>
-        <p class="section-body mb-4">Area 42 is meer dan een vakantiepark. Het is een plek waar de natuur het ritme bepaalt — geen agenda, geen haast. Verborgen tussen de bomen vind je ruimte om te ademen, te spelen en samen te zijn.</p>
-        <div class="feature-item">
-          <div class="feature-icon">🌿</div>
-          <div class="feature-text">
-            <h4>Duurzame inrichting</h4>
-            <p>Onze accommodaties zijn gebouwd met respect voor de omgeving.</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🛁</div>
-          <div class="feature-text">
-            <h4>Wellness op het park</h4>
-            <p>Sauna, buitenbad en behandelingen voor gasten van 16+.</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🍽️</div>
-          <div class="feature-text">
-            <h4>Lokale keuken</h4>
-            <p>Verse gerechten met ingrediënten van omliggende boerderijen.</p>
-          </div>
-        </div>
-        <a href="activiteiten.html" class="btn-cta mt-4">Alles over Area 42</a>
-      </div>
-      <div class="split-image">
-        <img src="forest_lodge.jpg" alt="Luxe Forest Lodge omgeven door bomen" onerror="this.style.background='linear-gradient(135deg,#5C7C5C,#4E342E)';this.style.display='block';this.removeAttribute('src');">
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- AREA42 UPDATE -->
-<!-- Accommodatie preview sectie — kaarten met Bootstrap grid -->
-<section class="section section-alt">
+<!-- ================================================
+     POPULAIRE ACCOMMODATIES
+     ================================================ -->
+<section class="section-pad" id="accommodaties">
   <div class="container">
-    <div class="text-center mb-5">
-      <span class="section-eyebrow">Waar wil jij slapen?</span>
-      <h2 class="section-title">Onze verblijfplaatsen</h2>
-      <p style="color:var(--text-muted);max-width:480px;margin:12px auto 0;">Van intieme lodges tot ruime villa's — elk met eigen karakter en dezelfde warmte.</p>
+    <div class="section-header-row">
+      <div>
+        <span class="section-eyebrow">Waar wil jij slapen?</span>
+        <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);">Unieke Accommodaties</h2>
+      </div>
+      <a href="#" class="see-all-link">Bekijk alle accommodaties</a>
     </div>
+
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="area42-card">
-          <div class="card-img-top" style="background:linear-gradient(135deg,#8FAF8F,#5C7C5C);height:240px;"></div>
-          <div class="card-body">
-            <h3>Forest Lodge</h3>
-            <p>Compact en sfeervol — perfect voor stellen die de natuur opzoeken.</p>
-            <span class="price-tag">Vanaf €110,– <span>per nacht</span></span>
-            <a href="accommodatie.html" class="btn-cta d-block text-center">Bekijk details</a>
+      <!-- Kaart 1 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-42">
+          <div class="card-img-placeholder" style="background:linear-gradient(135deg,#5C7C5C,#3E5E3E);">🌲</div>
+          <div class="card-body-42">
+            <span class="card-meta">4 personen · Forest Lodge</span>
+            <div class="card-title-42">Forest Lodge</div>
+            <p class="card-desc-42">Weggedoken tussen eeuwenoude eiken. Privédek met uitzicht op het bos.</p>
+            <div class="card-footer-42">
+              <div>
+                <div class="card-price">€110 <small>/ nacht</small></div>
+                <div style="font-size:0.72rem;color:var(--secondary);">★ 4.9 (124 reviews)</div>
+              </div>
+              <a href="#reserveren" class="btn-card-42">Bekijk</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="area42-card">
-          <div class="card-img-top" style="background:linear-gradient(135deg,#A1887F,#4E342E);height:240px;"></div>
-          <div class="card-body">
-            <h3>Wellness Suite</h3>
-            <p>Privéterras met jacuzzi en directe toegang tot het wellnesscentrum.</p>
-            <span class="price-tag">Vanaf €195,– <span>per nacht</span></span>
-            <a href="accommodatie.html" class="btn-cta d-block text-center">Bekijk details</a>
+
+      <!-- Kaart 2 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-42">
+          <div class="card-img-placeholder" style="background:linear-gradient(135deg,#A1887F,#6D4C41);">👨‍👩‍👧‍👦</div>
+          <div class="card-body-42">
+            <span class="card-meta">6 personen · Family Cabin</span>
+            <div class="card-title-42">Family Cabin</div>
+            <p class="card-desc-42">Ruime blokhut met open haard en eigen buitenkeuken voor grote gezinnen.</p>
+            <div class="card-footer-42">
+              <div>
+                <div class="card-price">€175 <small>/ nacht</small></div>
+                <div style="font-size:0.72rem;color:var(--secondary);">★ 4.8 (89 reviews)</div>
+              </div>
+              <a href="#reserveren" class="btn-card-42">Bekijk</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="area42-card">
-          <div class="card-img-top" style="background:linear-gradient(135deg,#D7CCC8,#A1887F);height:240px;"></div>
-          <div class="card-body">
-            <h3>Family Villa</h3>
-            <p>Ruim opgezet voor grote gezinnen, met speeltuin op 50 meter afstand.</p>
-            <span class="price-tag">Vanaf €260,– <span>per nacht</span></span>
-            <a href="accommodatie.html" class="btn-cta d-block text-center">Bekijk details</a>
+
+      <!-- Kaart 3 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-42">
+          <div class="card-img-placeholder" style="background:linear-gradient(135deg,#78909C,#455A64);">🛁</div>
+          <div class="card-body-42">
+            <span class="card-meta">2 personen · Wellness Suite</span>
+            <div class="card-title-42">Wellness Suite</div>
+            <p class="card-desc-42">Privéjacuzzi, sauna en directe toegang tot het wellnesscentrum.</p>
+            <div class="card-footer-42">
+              <div>
+                <div class="card-price">€195 <small>/ nacht</small></div>
+                <div style="font-size:0.72rem;color:var(--secondary);">★ 4.9 (67 reviews)</div>
+              </div>
+              <a href="#reserveren" class="btn-card-42">Bekijk</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="text-center mt-5">
-      <a href="accommodatie.html" class="btn-outline">Alle accommodaties bekijken</a>
+
+      <!-- Kaart 4 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-42">
+          <div class="card-img-placeholder" style="background:linear-gradient(135deg,#8D6E63,#4E342E);">🏡</div>
+          <div class="card-body-42">
+            <span class="card-meta">8 personen · Villa</span>
+            <div class="card-title-42">Villa Panorama</div>
+            <p class="card-desc-42">Volledig uitgeruste villa met panoramaterras en privézwembad.</p>
+            <div class="card-footer-42">
+              <div>
+                <div class="card-price">€320 <small>/ nacht</small></div>
+                <div style="font-size:0.72rem;color:var(--secondary);">★ 5.0 (42 reviews)</div>
+              </div>
+              <a href="#reserveren" class="btn-card-42">Bekijk</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- AREA42 UPDATE -->
-<!-- Split-blok omgekeerd: afbeelding links, tekst rechts -->
-<section class="section">
+
+<!-- ================================================
+     STATISTIEKEN BALK
+     ================================================ -->
+<div class="stats-section">
   <div class="container">
-    <div class="split-block reverse">
-      <div class="split-text">
-        <span class="section-eyebrow">Beleving & avontuur</span>
-        <h2 class="section-title mb-4">Elke dag een nieuw avontuur</h2>
-        <p class="section-body mb-4">Van fietsen door de bossen tot kanoën op het meer — Area 42 biedt activiteiten voor iedere leeftijd en elk tempo. Doe mee of doe niets: jij bepaalt.</p>
-        <a href="activiteiten.html" class="btn-cta">Ontdek activiteiten</a>
+    <div class="d-flex justify-content-center align-items-center flex-wrap gap-0">
+      <div class="stat-item">
+        <span class="stat-number">1.200+</span>
+        <span class="stat-label">Families per jaar</span>
       </div>
-      <div class="split-image">
-        <div style="width:100%;height:480px;border-radius:16px;background:linear-gradient(160deg,#5C7C5C,#2d4d2d);box-shadow:0 20px 60px rgba(78,52,46,0.18);"></div>
+      <div class="stats-divider d-none d-md-block"></div>
+      <div class="stat-item">
+        <span class="stat-number">42 ha</span>
+        <span class="stat-label">Natuur & bos</span>
+      </div>
+      <div class="stats-divider d-none d-md-block"></div>
+      <div class="stat-item">
+        <span class="stat-number">4.8 ★</span>
+        <span class="stat-label">Gemiddeld cijfer</span>
+      </div>
+      <div class="stats-divider d-none d-md-block"></div>
+      <div class="stat-item">
+        <span class="stat-number">30 jr</span>
+        <span class="stat-label">Vakantie-ervaring</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================
+     ACTIVITEITEN
+     ================================================ -->
+<section class="section-pad section-alt" id="activiteiten">
+  <div class="container">
+    <div class="section-header-row">
+      <div>
+        <span class="section-eyebrow">Iets voor iedereen</span>
+        <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);">Ontdek Nieuwe Activiteiten</h2>
+      </div>
+      <a href="#" class="see-all-link">Bekijk alle activiteiten</a>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="card-42 text-center" style="padding:22px 14px;">
+          <div style="font-size:2.2rem;margin-bottom:10px;">🏹</div>
+          <div class="card-title-42" style="font-size:0.88rem;">Boogschieten</div>
+          <p class="card-desc-42" style="font-size:0.78rem;margin-bottom:10px;">Leer de basis of ga voor het goud.</p>
+          <span style="font-size:0.78rem;font-weight:700;color:var(--accent-dark);">Vanaf €8 p.p.</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="card-42 text-center" style="padding:22px 14px;">
+          <div style="font-size:2.2rem;margin-bottom:10px;">🚴</div>
+          <div class="card-title-42" style="font-size:0.88rem;">Fietsen</div>
+          <p class="card-desc-42" style="font-size:0.78rem;margin-bottom:10px;">Verken 42 km aan bosroutes.</p>
+          <span style="font-size:0.78rem;font-weight:700;color:var(--accent-dark);">Vanaf €6 p.p.</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="card-42 text-center" style="padding:22px 14px;">
+          <div style="font-size:2.2rem;margin-bottom:10px;">🌲</div>
+          <div class="card-title-42" style="font-size:0.88rem;">Klimtuin</div>
+          <p class="card-desc-42" style="font-size:0.78rem;margin-bottom:10px;">Boomtoppen verkennen voor alle leeftijden.</p>
+          <span style="font-size:0.78rem;font-weight:700;color:var(--accent-dark);">Vanaf €10 p.p.</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="card-42 text-center" style="padding:22px 14px;">
+          <div style="font-size:2.2rem;margin-bottom:10px;">🛁</div>
+          <div class="card-title-42" style="font-size:0.88rem;">Wellness</div>
+          <p class="card-desc-42" style="font-size:0.78rem;margin-bottom:10px;">Sauna, bad en massages.</p>
+          <span style="font-size:0.78rem;font-weight:700;color:var(--accent-dark);">Vanaf €22 p.p.</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="card-42 text-center" style="padding:22px 14px;">
+          <div style="font-size:2.2rem;margin-bottom:10px;">🧘</div>
+          <div class="card-title-42" style="font-size:0.88rem;">Yoga</div>
+          <p class="card-desc-42" style="font-size:0.78rem;margin-bottom:10px;">Ochtend- en avondsessies in het bos.</p>
+          <span style="font-size:0.78rem;font-weight:700;color:var(--accent-dark);">Vanaf €12 p.p.</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="card-42 text-center" style="padding:22px 14px;">
+          <div style="font-size:2.2rem;margin-bottom:10px;">🎣</div>
+          <div class="card-title-42" style="font-size:0.88rem;">Vissen</div>
+          <p class="card-desc-42" style="font-size:0.78rem;margin-bottom:10px;">Aan het meer met eigen materiaal.</p>
+          <span style="font-size:0.78rem;font-weight:700;color:var(--accent-dark);">Gratis</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AREA42 UPDATE -->
-<!-- Reviews sectie: sociale bewijsvoering -->
-<section class="section section-alt">
+
+<!-- ================================================
+     RESTAURANTS
+     ================================================ -->
+<section class="section-pad" id="restaurants">
+  <div class="container">
+    <div class="section-header-row">
+      <div>
+        <span class="section-eyebrow">Van ontbijt tot diner</span>
+        <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);">Geniet van Lokale Smaken</h2>
+      </div>
+      <a href="#" class="see-all-link">Bekijk alle restaurants</a>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <div class="restaurant-card">
+          <div class="restaurant-img-placeholder" style="background:linear-gradient(135deg,#5C7C5C,#3E5E3E);">🌿</div>
+          <div class="restaurant-body">
+            <div>
+              <div class="restaurant-name">De Boscantine</div>
+              <p class="restaurant-desc">Seizoensgebonden menu met producten van lokale boerderijen. Open voor ontbijt & diner.</p>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="restaurant-price">Vanaf €18,–</span>
+              <a href="#" class="btn-card-42">Menu</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="restaurant-card">
+          <div class="restaurant-img-placeholder" style="background:linear-gradient(135deg,#A1887F,#6D4C41);">🔥</div>
+          <div class="restaurant-body">
+            <div>
+              <div class="restaurant-name">Vuurkuil BBQ</div>
+              <p class="restaurant-desc">Grill je eigen maaltijd boven open vuur. Elke avond van 17:00–22:00.</p>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="restaurant-price">Vanaf €24,–</span>
+              <a href="#" class="btn-card-42">Menu</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="restaurant-card">
+          <div class="restaurant-img-placeholder" style="background:linear-gradient(135deg,#78909C,#455A64);">☕</div>
+          <div class="restaurant-body">
+            <div>
+              <div class="restaurant-name">Koffiehuis 42</div>
+              <p class="restaurant-desc">Koffie, verse taarten en lichte lunches. Het hart van het park.</p>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="restaurant-price">Vanaf €5,–</span>
+              <a href="#" class="btn-card-42">Menu</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="restaurant-card">
+          <div class="restaurant-img-placeholder" style="background:linear-gradient(135deg,#8D6E63,#5D4037);">🍷</div>
+          <div class="restaurant-body">
+            <div>
+              <div class="restaurant-name">Wijnbar Eik</div>
+              <p class="restaurant-desc">Culinaire borrelplanken en Europese wijnen. Reservering aanbevolen.</p>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="restaurant-price">Vanaf €12,–</span>
+              <a href="#" class="btn-card-42">Menu</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================
+     REVIEWS
+     ================================================ -->
+<section class="section-pad section-alt">
   <div class="container">
     <div class="text-center mb-5">
       <span class="section-eyebrow">Wat gasten zeggen</span>
-      <h2 class="section-title">4.8 van de 5 sterren</h2>
+      <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);">4.8 van de 5 sterren</h2>
     </div>
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="review-card">
+      <div class="col-12 col-md-4">
+        <div class="review-card-42">
           <div class="review-stars">★★★★★</div>
-          <p class="review-text">"We kwamen uitgeput aan en vertrokken herboren. De bossen, de stilte, het eten — perfect gecombineerd."</p>
-          <span class="review-author">Lisanne & Tom, Utrecht</span>
+          <p class="review-text">"We kwamen uitgeput aan en vertrokken herboren. De rust, de natuur, het eten — alles was perfect."</p>
+          <span class="review-author">Lisanne & Tom · Utrecht</span>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="review-card">
+      <div class="col-12 col-md-4">
+        <div class="review-card-42">
           <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Onze kinderen wilden niet meer naar huis. De activiteiten waren geweldig en het personeel uitzonderlijk vriendelijk."</p>
-          <span class="review-author">Familie De Vries, Amsterdam</span>
+          <p class="review-text">"Onze kinderen wilden niet meer naar huis. De activiteiten zijn gevarieerd en het personeel geweldig."</p>
+          <span class="review-author">Familie De Vries · Amsterdam</span>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="review-card">
-          <div class="review-stars">★★★★☆</div>
-          <p class="review-text">"De Wellness Suite was een absolute aanrader. Al het tweede weekend dat we hier verblijven en zeker niet het laatste."</p>
-          <span class="review-author">Marco, Eindhoven</span>
+      <div class="col-12 col-md-4">
+        <div class="review-card-42">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"De Wellness Suite was een openbaring. Al ons tweede bezoek en zeker niet het laatste."</p>
+          <span class="review-author">Marco · Eindhoven</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AREA42 UPDATE -->
-<!-- CTA banner: groen accent — duidelijke conversie uitnodiging -->
-<section class="cta-banner">
+
+<!-- ================================================
+     CTA SECTIE
+     ================================================ -->
+<section class="cta-section">
   <div class="container">
     <span class="section-eyebrow" style="color:rgba(255,255,255,0.7);">Klaar voor een pauze?</span>
     <h2>Jouw verblijf begint hier</h2>
-    <p>Beschikbaarheid wisselt snel. Reserveer vandaag nog en verzeker je plek in de natuur.</p>
-    <a href="reservering.html" class="btn-cta-white">Controleer beschikbaarheid</a>
+    <p>Beschikbaarheid wisselt snel. Reserveer vandaag en verzeker je plek in de natuur.</p>
+    <a href="#reserveren" class="btn-primary-42" style="background:#fff;color:var(--accent-dark)!important;border-color:#fff;padding:14px 36px;font-size:0.95rem;">
+      Controleer beschikbaarheid
+    </a>
   </div>
 </section>
 
-<!-- AREA42 UPDATE -->
-<!-- Footer: zelfde structuur als Area52 footer, nieuwe bruine stijl -->
-<footer class="area-footer">
+
+<!-- ================================================
+     DATABASE QUERY SECTIE
+     Simpele query-interface voor database integratie
+     ================================================ -->
+<section class="db-section" id="database">
   <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-4 col-md-6">
-        <span class="footer-logo">AREA 42</span>
-        <p class="footer-tagline mt-2">Vakantiepark · Veluwe, Nederland<br>Verborgen in de natuur, dichtbij het leven.</p>
-        <div class="mt-4 d-flex gap-3">
-          <a href="#" aria-label="Instagram"></a>
-          <a href="#" aria-label="Facebook"></a>
-          <a href="#" aria-label="TripAdvisor"></a>
+    <h2 class="db-section-title">Database Queries</h2>
+    <p class="db-section-sub">Kies een query, pas parameters aan en voer uit — klaar voor integratie met je eigen database.</p>
+
+    <!-- Schema info -->
+    <div style="margin-bottom:24px;">
+      <span style="color:rgba(255,255,255,0.35);font-size:0.75rem;font-family:'Poppins',sans-serif;display:block;margin-bottom:8px;">TABELLEN IN GEBRUIK</span>
+      <span class="schema-badge">accommodaties</span>
+      <span class="schema-badge">reserveringen</span>
+      <span class="schema-badge">gasten</span>
+      <span class="schema-badge">activiteiten</span>
+      <span class="schema-badge">restaurants</span>
+    </div>
+
+    <div class="db-panel">
+      <div class="db-panel-header">
+        <div class="db-dot" style="background:#FF5F57;"></div>
+        <div class="db-dot" style="background:#FFBD2E;"></div>
+        <div class="db-dot" style="background:#28C840;"></div>
+        <span class="db-panel-title">area42_db · MySQL / MariaDB</span>
+      </div>
+      <div class="db-panel-body">
+
+        <!-- Query kiezer -->
+        <div class="query-tabs">
+          <button class="query-tab active" data-query="beschikbaar">Beschikbaarheid</button>
+          <button class="query-tab" data-query="reservering">Nieuwe reservering</button>
+          <button class="query-tab" data-query="gasten">Gasten opzoeken</button>
+          <button class="query-tab" data-query="bezetting">Bezettingsgraad</button>
+        </div>
+
+        <!-- SQL code vak -->
+        <div class="db-code" id="sqlDisplay"></div>
+
+        <!-- Parameters -->
+        <div class="db-params" id="paramsContainer"></div>
+
+        <!-- Uitvoerknop -->
+        <div style="margin-top:16px;display:flex;gap:10px;align-items:center;">
+          <button class="btn-accent-42" id="runQuery" style="padding:10px 22px;font-size:0.85rem;">
+            ▶ Query uitvoeren
+          </button>
+          <button class="query-tab" id="resetQuery" style="font-size:0.75rem;">Reset</button>
+          <span id="queryTimer" style="color:rgba(255,255,255,0.3);font-size:0.75rem;font-family:'Courier New',monospace;"></span>
+        </div>
+
+        <!-- Resultaten -->
+        <div class="db-results" id="queryResults" style="display:none;margin-top:16px;"></div>
+        <div class="db-status" id="queryStatus"></div>
+
+      </div>
+    </div>
+
+    <!-- Integratie tip -->
+    <div style="margin-top:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px 20px;">
+      <p style="color:rgba(255,255,255,0.5);font-size:0.8rem;font-family:'Poppins',sans-serif;margin:0;">
+        <strong style="color:rgba(255,255,255,0.7);">Integratie tip:</strong>
+        Koppel via <code style="color:#80CBC4;">PDO</code> (PHP), <code style="color:#80CBC4;">mysql2</code> (Node.js) of <code style="color:#80CBC4;">SQLAlchemy</code> (Python).
+        De queries zijn geparametriseerd — veilig tegen SQL-injectie. Gebruik <code style="color:#CE9178;">prepared statements</code>.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================
+     CONTACT
+     ================================================ -->
+<section class="section-pad section-alt" id="contact">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-12 col-lg-5">
+        <span class="section-eyebrow">Hulp nodig?</span>
+        <h2 class="section-title mb-3">Neem contact op</h2>
+        <p style="color:var(--text-muted);margin-bottom:28px;">Onze medewerkers helpen je graag bij reserveringen, arrangementen of vragen over het park.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:rgba(92,124,92,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">📍</div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif;font-weight:600;font-size:0.85rem;color:var(--primary);">Adres</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);">Bosweg 42, 7312 AB Apeldoorn</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:rgba(92,124,92,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">📞</div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif;font-weight:600;font-size:0.85rem;color:var(--primary);">Telefoon</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);">+31 (0)55 123 45 67</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:rgba(92,124,92,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✉️</div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif;font-weight:600;font-size:0.85rem;color:var(--primary);">E-mail</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);">info@area42.nl</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-6 col-md-2">
-        <h5>Verblijf</h5>
-        <ul class="list-unstyled">
-          <li><a href="accommodatie.html">Accommodaties</a></li>
-          <li><a href="reservering.html">Reserveren</a></li>
-          <li><a href="#">Arrangementen</a></li>
-          <li><a href="#">Voorwaarden</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md-2">
-        <h5>Beleven</h5>
-        <ul class="list-unstyled">
-          <li><a href="activiteiten.html">Activiteiten</a></li>
-          <li><a href="horeca.html">Restaurants</a></li>
-          <li><a href="#">Wellness</a></li>
-          <li><a href="#">Evenementen</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md-2">
-        <h5>Service</h5>
-        <ul class="list-unstyled">
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="inloggen.html">Mijn reservering</a></li>
-          <li><a href="#">Over ons</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md-2">
-        <h5>Betalen</h5>
-        <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;">iDEAL · Visa<br>Mastercard · PayPal</p>
-        <h5 class="mt-4">Contact</h5>
-        <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;">+31 (0)55 123 45 67<br>info@area42.nl</p>
+
+      <div class="col-12 col-lg-7">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:36px;box-shadow:var(--card-shadow);">
+          <h3 style="font-size:1.1rem;margin-bottom:24px;">Stuur een bericht</h3>
+          <div class="row g-3">
+            <div class="col-12 col-sm-6">
+              <label style="display:block;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);margin-bottom:6px;">Naam</label>
+              <input type="text" placeholder="Jouw naam" style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'Open Sans',sans-serif;font-size:0.9rem;color:var(--primary);background:var(--bg);">
+            </div>
+            <div class="col-12 col-sm-6">
+              <label style="display:block;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);margin-bottom:6px;">E-mail</label>
+              <input type="email" placeholder="naam@voorbeeld.nl" style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'Open Sans',sans-serif;font-size:0.9rem;color:var(--primary);background:var(--bg);">
+            </div>
+            <div class="col-12">
+              <label style="display:block;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);margin-bottom:6px;">Bericht</label>
+              <textarea rows="4" placeholder="Stel hier je vraag..." style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'Open Sans',sans-serif;font-size:0.9rem;color:var(--primary);background:var(--bg);resize:vertical;"></textarea>
+            </div>
+            <div class="col-12">
+              <button class="btn-accent-42" style="width:100%;padding:13px;font-size:0.9rem;">Verzenden</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="footer-bottom mt-4">
+</section>
+
+
+<!-- ================================================
+     FOOTER
+     ================================================ -->
+<footer class="footer-42">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-12 col-md-5 col-lg-4">
+        <div class="footer-brand">AREA<span>42</span></div>
+        <p class="footer-tagline">Vakantiepark · Veluwe, Nederland<br>Verborgen in de natuur, dichtbij het leven.</p>
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <a href="#" style="color:rgba(255,255,255,0.5);font-size:1.1rem;text-decoration:none;">📷</a>
+          <a href="#" style="color:rgba(255,255,255,0.5);font-size:1.1rem;text-decoration:none;">👥</a>
+          <a href="#" style="color:rgba(255,255,255,0.5);font-size:1.1rem;text-decoration:none;">🏆</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Verblijf</h6>
+        <a href="#accommodaties">Accommodaties</a>
+        <a href="#reserveren">Reserveren</a>
+        <a href="#">Arrangementen</a>
+        <a href="#">Voorwaarden</a>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Beleven</h6>
+        <a href="#activiteiten">Activiteiten</a>
+        <a href="#restaurants">Restaurants</a>
+        <a href="#">Wellness</a>
+        <a href="#">Evenementen</a>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Service</h6>
+        <a href="#contact">Contact</a>
+        <a href="#">FAQ</a>
+        <a href="#">Over ons</a>
+        <a href="#">Vacatures</a>
+      </div>
+      <div class="col-6 col-md-2 footer-col">
+        <h6>Betalen</h6>
+        <a href="#">iDEAL</a>
+        <a href="#">Visa</a>
+        <a href="#">Mastercard</a>
+        <a href="#">PayPal</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom-bar">
     <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
       <p>© 2026 Area 42 Vakantiepark B.V. — Alle rechten voorbehouden</p>
-      <p><a href="#" style="color:rgba(255,255,255,0.45);">Privacy</a> · <a href="#" style="color:rgba(255,255,255,0.45);">Cookies</a></p>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+        <a href="#">Sitemap</a>
+      </div>
     </div>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="javascript.js"></script>
+
+<!-- ================================================
+     JAVASCRIPT
+     ================================================ -->
+<script>
+/* ================================================
+   1. MOBILE MENU TOGGLE
+   ================================================ */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+
+/* Sluit menu bij klik op link */
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+/* ================================================
+   2. DATUMVALIDATIE — Verleden blokkeren
+   Probleem: gebruikers konden datum in verleden kiezen
+   Oplossing: min-attribuut dynamisch + cross-field validatie
+   ================================================ */
+const aankomstInput = document.getElementById('aankomst');
+const vertrekInput  = document.getElementById('vertrek');
+const aankomstError = document.getElementById('aankomstError');
+const vertrekError  = document.getElementById('vertrekError');
+
+/* Haal de datum van vandaag op als ISO string (YYYY-MM-DD) */
+function getTodayISO() {
+  const d = new Date();
+  d.setHours(0,0,0,0);
+  return d.toISOString().split('T')[0];
+}
+
+/* Stel morgen in als minimumdatum voor vertrek */
+function getTomorrowISO(fromDate) {
+  const d = fromDate ? new Date(fromDate) : new Date();
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().split('T')[0];
+}
+
+/* Initialiseer min-datums bij laden */
+(function initDates() {
+  const today    = getTodayISO();
+  const tomorrow = getTomorrowISO();
+  aankomstInput.min = today;
+  vertrekInput.min  = tomorrow;
+
+  /* Standaard waarden: morgen & overmorgen */
+  aankomstInput.value = tomorrow;
+  const overmorrow = getTomorrowISO(tomorrow);
+  vertrekInput.value  = overmorrow;
+  vertrekInput.min    = overmorrow;
+})();
+
+/* Valideer aankomstdatum */
+aankomstInput.addEventListener('change', () => {
+  const today     = getTodayISO();
+  const aankomst  = aankomstInput.value;
+
+  if (aankomst < today) {
+    aankomstInput.classList.add('date-error');
+    aankomstError.classList.add('show');
+    aankomstInput.value = today;
+    return;
+  }
+
+  aankomstInput.classList.remove('date-error');
+  aankomstError.classList.remove('show');
+
+  /* Pas vertrek min aan op basis van aankomst */
+  const minVertrek = getTomorrowISO(aankomst);
+  vertrekInput.min  = minVertrek;
+
+  /* Als vertrek eerder is dan aankomst+1: automatisch corrigeren */
+  if (vertrekInput.value && vertrekInput.value <= aankomst) {
+    vertrekInput.value = minVertrek;
+    vertrekError.classList.remove('show');
+    vertrekInput.classList.remove('date-error');
+  }
+});
+
+/* Valideer vertrekdatum */
+vertrekInput.addEventListener('change', () => {
+  const aankomst = aankomstInput.value;
+  const vertrek  = vertrekInput.value;
+
+  if (vertrek <= aankomst) {
+    vertrekInput.classList.add('date-error');
+    vertrekError.classList.add('show');
+    vertrekInput.value = getTomorrowISO(aankomst);
+    return;
+  }
+
+  vertrekInput.classList.remove('date-error');
+  vertrekError.classList.remove('show');
+});
+
+/* Zoekknop validatie */
+document.getElementById('searchBtn').addEventListener('click', (e) => {
+  const today    = getTodayISO();
+  const aankomst = aankomstInput.value;
+  const vertrek  = vertrekInput.value;
+  let valid = true;
+
+  if (!aankomst || aankomst < today) {
+    aankomstInput.classList.add('date-error');
+    aankomstError.classList.add('show');
+    valid = false;
+  }
+  if (!vertrek || vertrek <= aankomst) {
+    vertrekInput.classList.add('date-error');
+    vertrekError.classList.add('show');
+    valid = false;
+  }
+
+  if (valid) {
+    /* Scroll naar accommodaties als validatie geslaagd */
+    document.getElementById('accommodaties').scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+/* ================================================
+   3. SMOOTH SCROLL voor ankerlinks
+   ================================================ */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 70; /* Hoogte van de fixed navbar */
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+/* ================================================
+   4. DATABASE QUERY ENGINE
+   Simuleert een database koppeling met voorbeelddata
+   Klaar voor integratie via fetch() naar een backend
+   ================================================ */
+const queries = {
+  beschikbaar: {
+    sql: `<span class="sql-keyword">SELECT</span>
+  a.<span class="sql-field">naam</span>,
+  a.<span class="sql-field">type</span>,
+  a.<span class="sql-field">max_personen</span>,
+  a.<span class="sql-field">prijs_per_nacht</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">accommodaties</span> a
+<span class="sql-keyword">WHERE</span> a.<span class="sql-field">id</span> <span class="sql-keyword">NOT IN</span> (
+  <span class="sql-keyword">SELECT</span> r.<span class="sql-field">accommodatie_id</span>
+  <span class="sql-keyword">FROM</span> <span class="sql-table">reserveringen</span> r
+  <span class="sql-keyword">WHERE</span> r.<span class="sql-field">aankomst</span> &lt; <span class="sql-string">:vertrek</span>
+    <span class="sql-keyword">AND</span> r.<span class="sql-field">vertrek</span> &gt; <span class="sql-string">:aankomst</span>
+    <span class="sql-keyword">AND</span> r.<span class="sql-field">status</span> != <span class="sql-string">'geannuleerd'</span>
+)
+<span class="sql-keyword">AND</span> a.<span class="sql-field">max_personen</span> &gt;= <span class="sql-number">:gasten</span>
+<span class="sql-keyword">ORDER BY</span> a.<span class="sql-field">prijs_per_nacht</span> <span class="sql-keyword">ASC</span>;`,
+    params: [
+      { name: 'aankomst', label: 'Aankomst', type: 'date' },
+      { name: 'vertrek',  label: 'Vertrek',  type: 'date' },
+      { name: 'gasten',   label: 'Gasten',   type: 'number', placeholder: '2' }
+    ],
+    mockData: {
+      headers: ['naam', 'type', 'personen', 'prijs/nacht'],
+      rows: [
+        ['Forest Lodge',   'lodge',   '4',  '€110'],
+        ['Family Cabin',   'cabin',   '6',  '€175'],
+        ['Villa Panorama', 'villa',   '8',  '€320'],
+      ]
+    }
+  },
+  reservering: {
+    sql: `<span class="sql-keyword">INSERT INTO</span> <span class="sql-table">reserveringen</span> (
+  <span class="sql-field">gast_id</span>,
+  <span class="sql-field">accommodatie_id</span>,
+  <span class="sql-field">aankomst</span>,
+  <span class="sql-field">vertrek</span>,
+  <span class="sql-field">status</span>,
+  <span class="sql-field">aangemaakt_op</span>
+) <span class="sql-keyword">VALUES</span> (
+  <span class="sql-string">:gast_id</span>,
+  <span class="sql-string">:accommodatie_id</span>,
+  <span class="sql-string">:aankomst</span>,
+  <span class="sql-string">:vertrek</span>,
+  <span class="sql-string">'bevestigd'</span>,
+  <span class="sql-keyword">NOW</span>()
+);
+
+<span class="sql-comment">-- Haal het nieuwe reserveringsnummer op:</span>
+<span class="sql-keyword">SELECT LAST_INSERT_ID</span>() <span class="sql-keyword">AS</span> <span class="sql-field">reservering_id</span>;`,
+    params: [
+      { name: 'gast_id',          label: 'Gast ID',          type: 'number', placeholder: '1042' },
+      { name: 'accommodatie_id',  label: 'Accommodatie ID',  type: 'number', placeholder: '3'    },
+      { name: 'aankomst',         label: 'Aankomst',         type: 'date'                        },
+      { name: 'vertrek',          label: 'Vertrek',          type: 'date'                        }
+    ],
+    mockData: {
+      headers: ['reservering_id', 'status',        'aangemaakt_op'],
+      rows: [
+        ['1387',            'bevestigd', '2026-06-19 10:42:31']
+      ]
+    }
+  },
+  gasten: {
+    sql: `<span class="sql-keyword">SELECT</span>
+  g.<span class="sql-field">id</span>,
+  g.<span class="sql-field">voornaam</span>,
+  g.<span class="sql-field">achternaam</span>,
+  g.<span class="sql-field">email</span>,
+  <span class="sql-keyword">COUNT</span>(r.<span class="sql-field">id</span>) <span class="sql-keyword">AS</span> <span class="sql-field">aantal_bezoeken</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">gasten</span> g
+<span class="sql-keyword">LEFT JOIN</span> <span class="sql-table">reserveringen</span> r
+  <span class="sql-keyword">ON</span> r.<span class="sql-field">gast_id</span> = g.<span class="sql-field">id</span>
+<span class="sql-keyword">WHERE</span> g.<span class="sql-field">email</span> <span class="sql-keyword">LIKE</span> <span class="sql-string">:zoekterm</span>
+   <span class="sql-keyword">OR</span> g.<span class="sql-field">achternaam</span> <span class="sql-keyword">LIKE</span> <span class="sql-string">:zoekterm</span>
+<span class="sql-keyword">GROUP BY</span> g.<span class="sql-field">id</span>
+<span class="sql-keyword">ORDER BY</span> <span class="sql-field">aantal_bezoeken</span> <span class="sql-keyword">DESC</span>
+<span class="sql-keyword">LIMIT</span> <span class="sql-number">20</span>;`,
+    params: [
+      { name: 'zoekterm', label: 'Naam of e-mail', type: 'text', placeholder: '%de vries%' }
+    ],
+    mockData: {
+      headers: ['id',   'voornaam', 'achternaam', 'email',                 'bezoeken'],
+      rows: [
+        ['204',  'Anna',     'de Vries',  'anna@mail.nl',          '5'],
+        ['89',   'Pieter',   'de Vries',  'p.devries@home.nl',     '2'],
+        ['311',  'Mieke',    'Devries',   'mdevries@outlook.com',  '1'],
+      ]
+    }
+  },
+  bezetting: {
+    sql: `<span class="sql-keyword">SELECT</span>
+  <span class="sql-keyword">MONTH</span>(r.<span class="sql-field">aankomst</span>) <span class="sql-keyword">AS</span> <span class="sql-field">maand</span>,
+  <span class="sql-keyword">COUNT</span>(r.<span class="sql-field">id</span>)       <span class="sql-keyword">AS</span> <span class="sql-field">reserveringen</span>,
+  <span class="sql-keyword">ROUND</span>(
+    <span class="sql-keyword">COUNT</span>(r.<span class="sql-field">id</span>) / a.<span class="sql-field">totaal</span> * <span class="sql-number">100</span>, <span class="sql-number">1</span>
+  ) <span class="sql-keyword">AS</span> <span class="sql-field">bezettingsgraad_pct</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">reserveringen</span> r
+<span class="sql-keyword">CROSS JOIN</span> (
+  <span class="sql-keyword">SELECT COUNT</span>(*) <span class="sql-keyword">AS</span> <span class="sql-field">totaal</span>
+  <span class="sql-keyword">FROM</span> <span class="sql-table">accommodaties</span>
+) a
+<span class="sql-keyword">WHERE</span> <span class="sql-keyword">YEAR</span>(r.<span class="sql-field">aankomst</span>) = <span class="sql-string">:jaar</span>
+  <span class="sql-keyword">AND</span> r.<span class="sql-field">status</span> != <span class="sql-string">'geannuleerd'</span>
+<span class="sql-keyword">GROUP BY</span> <span class="sql-field">maand</span>, a.<span class="sql-field">totaal</span>
+<span class="sql-keyword">ORDER BY</span> <span class="sql-field">maand</span>;`,
+    params: [
+      { name: 'jaar', label: 'Jaar', type: 'number', placeholder: '2026' }
+    ],
+    mockData: {
+      headers: ['maand', 'reserveringen', 'bezetting %'],
+      rows: [
+        ['1 (jan)',  '18',  '52.9%'],
+        ['2 (feb)',  '22',  '64.7%'],
+        ['3 (mrt)',  '28',  '82.4%'],
+        ['4 (apr)',  '31',  '91.2%'],
+        ['5 (mei)',  '34',  '100%'],
+        ['6 (jun)',  '33',  '97.1%'],
+      ]
+    }
+  }
+};
+
+let activeQuery = 'beschikbaar';
+let paramInputs = {};
+
+function renderQuery(key) {
+  activeQuery = key;
+  const q = queries[key];
+
+  /* SQL weergeven */
+  document.getElementById('sqlDisplay').innerHTML = q.sql;
+
+  /* Parameters renderen */
+  const pc = document.getElementById('paramsContainer');
+  pc.innerHTML = '';
+  paramInputs  = {};
+
+  q.params.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'db-param';
+
+    const label = document.createElement('label');
+    label.textContent = p.label;
+    div.appendChild(label);
+
+    const input = p.type === 'select'
+      ? document.createElement('select')
+      : document.createElement('input');
+
+    if (p.type !== 'select') {
+      input.type = p.type || 'text';
+      input.placeholder = p.placeholder || '';
+      if (p.type === 'date') input.value = getTomorrowISO();
+    }
+
+    div.appendChild(input);
+    pc.appendChild(div);
+    paramInputs[p.name] = input;
+  });
+
+  /* Reset resultaten */
+  document.getElementById('queryResults').style.display = 'none';
+  document.getElementById('queryStatus').innerHTML = '';
+  document.getElementById('queryTimer').textContent  = '';
+}
+
+/* Query tabs event */
+document.querySelectorAll('.query-tab[data-query]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.query-tab[data-query]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderQuery(btn.dataset.query);
+  });
+});
+
+/* Query uitvoeren (simulatie + klaar voor backend) */
+document.getElementById('runQuery').addEventListener('click', () => {
+  const startTime = Date.now();
+  const btn = document.getElementById('runQuery');
+  btn.textContent = '⏳ Uitvoeren...';
+  btn.disabled = true;
+
+  /* Simuleer netwerk delay (vervang door echte fetch naar je backend) */
+  setTimeout(() => {
+    const elapsed  = Date.now() - startTime;
+    const q        = queries[activeQuery];
+    const data     = q.mockData;
+    const resultsEl = document.getElementById('queryResults');
+    const statusEl  = document.getElementById('queryStatus');
+
+    /* Bouw tabel */
+    let html = '<table><thead><tr>';
+    data.headers.forEach(h => { html += `<th>${h}</th>`; });
+    html += '</tr></thead><tbody>';
+    data.rows.forEach(row => {
+      html += '<tr>';
+      row.forEach(cell => { html += `<td>${cell}</td>`; });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+
+    resultsEl.innerHTML = html;
+    resultsEl.style.display = 'block';
+
+    statusEl.innerHTML = `<span class="ok">✓ OK</span> — ${data.rows.length} rijen · ${elapsed}ms`;
+    document.getElementById('queryTimer').textContent = `${elapsed}ms`;
+
+    btn.textContent = '▶ Query uitvoeren';
+    btn.disabled = false;
+  }, 320);
+
+  /*
+  === BACKEND INTEGRATIE (PHP voorbeeld) ===
+  fetch('api/query.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: activeQuery,
+      params: Object.fromEntries(
+        Object.entries(paramInputs).map(([k,v]) => [k, v.value])
+      )
+    })
+  })
+  .then(r => r.json())
+  .then(data => { ... render data.rows ... })
+  .catch(err => { statusEl.innerHTML = '<span class="err">✗ Verbindingsfout</span>'; });
+  */
+});
+
+/* Reset knop */
+document.getElementById('resetQuery').addEventListener('click', () => {
+  renderQuery(activeQuery);
+});
+
+/* Initialiseer eerste query */
+renderQuery('beschikbaar');
+
+</script>
 </body>
 </html>
+
+
+
+
